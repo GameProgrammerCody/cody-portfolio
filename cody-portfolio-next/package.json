@@ -1,0 +1,22 @@
+{
+  "name": "cody-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "populate:galleries": "node --experimental-modules scripts/generate-galleries.js"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.24",
+    "next": "^14.2.33",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.17",
+    "postcss": "8.4.34",
+    "tailwindcss": "3.4.13"
+  }
+}

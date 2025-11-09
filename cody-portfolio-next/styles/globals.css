@@ -1,0 +1,79 @@
+/* --- Import fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Global text defaults --- */
+html, body {
+  font-family: 'Inter', system-ui, sans-serif;
+  @apply bg-[#050a12] text-white leading-relaxed tracking-[0.01em];
+}
+
+/* --- Headers, logo & UI elements --- */
+h1, h2, h3, h4, h5, h6,
+.header-logo,
+.btn,
+.nav-link {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  @apply font-semibold;
+}
+
+/* --- Headline gradient styling --- */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400;
+}
+
+/* --- Common UI elements --- */
+.card {
+  @apply rounded-2xl border border-white/10 bg-black/30;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-2xl text-sm font-medium transition shadow-sm hover:shadow;
+}
+
+.btn-primary {
+  @apply bg-cyan-500/90 hover:bg-cyan-400 text-black;
+}
+
+.btn-ghost {
+  @apply bg-white/5 hover:bg-white/10 border border-white/10;
+}
+
+/* --- Animated gradient for hero titles --- */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(90deg, #00ffff, #6a5acd, #9b59b6, #00ffff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+/* --- Optional shimmer for call-to-action buttons --- */
+@keyframes shimmer {
+  0%   { transform: translateX(-150%); opacity: 0; }
+  15%  { opacity: 0.35; }
+  85%  { opacity: 0.35; }
+  100% { transform: translateX(150%); opacity: 0; }
+}
+
+h1, h2, h3 {
+  line-height: 1.1;
+  padding-bottom: 0.2em;
+}
+
