@@ -7,10 +7,10 @@ export default function ParticleBackground() {
   const [opacity, setOpacity] = useState(1)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile once
+  // Detect mobile or touch
   useEffect(() => {
     const checkMobile = () =>
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window)
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
@@ -52,8 +52,12 @@ export default function ParticleBackground() {
     }
     if (!isMobile) window.addEventListener("mousemove", handleMouseMove)
 
+    // Particle density adjustment
+    const particleCount = isMobile ? 70 : 160
+    const connectionRange = isMobile ? 100 : 130
+
     // Particles
-    const particles = Array.from({ length: 160 }).map(() => {
+    const particles = Array.from({ length: particleCount }).map(() => {
       const z = Math.random() ** 2
       return {
         x: Math.random(),
@@ -123,8 +127,8 @@ export default function ParticleBackground() {
           const dx = a.px - b.px
           const dy = a.py - b.py
           const d2 = dx * dx + dy * dy
-          if (d2 < 130 * 130) {
-            const alpha = 0.12 * (1 - d2 / (130 * 130))
+          if (d2 < connectionRange * connectionRange) {
+            const alpha = 0.12 * (1 - d2 / (connectionRange * connectionRange))
             ctx.strokeStyle = `hsla(${hue}, 100%, 72%, ${alpha})`
             ctx.lineWidth = 1
             ctx.beginPath()

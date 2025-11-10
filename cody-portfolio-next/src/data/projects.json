@@ -494,6 +494,7 @@
     {
       "slug": "saving-security",
       "title": "Saving Security",
+	  "order": 4,
       "category": "commercial",
       "featured": false,
       "blurb": "A dynamic story game where the players choices impact the events throughout the game, leading to a variety of outcomes.",
@@ -570,6 +571,7 @@
     {
       "slug": "catch-up",
       "title": "Catch Up",
+	  "order": 5,
       "category": "commercial",
       "featured": false,
       "blurb": "A logic based card game where the player competes for the highest score against various AI opponents with differing levels of difficulty.",
@@ -647,6 +649,7 @@
     {
       "slug": "rescue-squad",
       "title": "Rescue Squad",
+	  "order": 6,
       "category": "commercial",
       "featured": false,
       "blurb": "A mission simulator game which tests the user’s aversion to risk and rewards by presenting them with various missions for their team to complete.",
