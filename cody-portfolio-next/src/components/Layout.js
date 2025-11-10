@@ -41,7 +41,7 @@ export default function Layout({ children }) {
     return () => observer.disconnect()
   }, [])
 
-  // Close mobile menu when resizing to desktop
+  // Close menu when resizing to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false)
@@ -73,7 +73,7 @@ export default function Layout({ children }) {
             CODY WAY
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex gap-4 text-sm items-center">
             {[
               { href: '/projects', label: 'Projects' },
@@ -91,7 +91,6 @@ export default function Layout({ children }) {
                 <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-
             <a
               href="mailto:gameprogrammercody@gmail.com"
               className="ml-2 px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/30 
@@ -100,13 +99,12 @@ export default function Layout({ children }) {
             >
               Hire Me
             </a>
-
             <div className="ml-3">
               <GalaxyToggle />
             </div>
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Button */}
           <button
             className="md:hidden text-cyan-300 hover:text-white transition text-2xl"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -117,8 +115,12 @@ export default function Layout({ children }) {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        {menuOpen && (
-          <div className="md:hidden bg-black/80 backdrop-blur-md border-t border-cyan-400/20 text-center py-4 space-y-3 animate-fadeIn">
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="bg-black/80 backdrop-blur-md border-t border-cyan-400/20 text-center py-4 space-y-3">
             {[
               { href: '/projects', label: 'Projects' },
               { href: '/about', label: 'About' },
@@ -145,13 +147,13 @@ export default function Layout({ children }) {
               <GalaxyToggle />
             </div>
           </div>
-        )}
+        </div>
       </header>
 
-      {/* ----- Page Content ----- */}
+      {/* Page content */}
       <main className="mx-auto max-w-6xl px-4 pt-24 pb-16">{children}</main>
 
-      {/* ----- Footer ----- */}
+      {/* Footer */}
       <footer
         ref={footerRef}
         className="relative mt-10 border-t border-cyan-400/20 bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-indigo-950/40 backdrop-blur-md overflow-hidden group"
@@ -172,7 +174,6 @@ export default function Layout({ children }) {
             <p className="text-white/60">Gameplay Programmer & Systems Developer</p>
             <p className="text-white/50">© {new Date().getFullYear()} Cody Way</p>
           </div>
-
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
               Explore
@@ -183,7 +184,6 @@ export default function Layout({ children }) {
             <Link href="/about" className="text-white/60 hover:text-cyan-300 transition-colors">About</Link>
             <Link href="/resume" className="text-white/60 hover:text-cyan-300 transition-colors">Resume</Link>
           </div>
-
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
               Contact
@@ -192,28 +192,13 @@ export default function Layout({ children }) {
             <a href="mailto:gameprogrammercody@gmail.com" className="text-white/60 hover:text-cyan-300 transition-colors">
               gameprogrammercody@gmail.com
             </a>
-            <a
-              href="https://linkedin.com/in/cody-way"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 hover:text-cyan-300 transition-colors"
-            >
+            <a href="https://linkedin.com/in/cody-way" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-300 transition-colors">
               LinkedIn
             </a>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-blue-400/40"></div>
       </footer>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-5px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.4s ease-out forwards;
-        }
-      `}</style>
     </div>
   )
 }
