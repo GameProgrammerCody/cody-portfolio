@@ -5,8 +5,18 @@ export default function ParticleBackground() {
   const rafRef = useRef(0)
   const [enabled, setEnabled] = useState(true)
   const [opacity, setOpacity] = useState(1)
+  const [isMobile, setIsMobile] = useState(false)
 
-  // Listen for motion toggle + load saved pref
+  // Detect mobile once
+  useEffect(() => {
+    const checkMobile = () =>
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // Listen for motion toggle + saved pref
   useEffect(() => {
     const saved = localStorage.getItem("reduceMotion")
     if (saved === "true") setEnabled(false)
@@ -32,18 +42,19 @@ export default function ParticleBackground() {
     const DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
     let w = 0, h = 0
 
-    // Mouse parallax
+    // Mouse parallax only for desktop
     const target = { x: 0.5, y: 0.5 }
     const mouse = { x: 0.5, y: 0.5 }
     const handleMouseMove = (e) => {
+      if (isMobile) return
       target.x = e.clientX / window.innerWidth
       target.y = e.clientY / window.innerHeight
     }
-    window.addEventListener("mousemove", handleMouseMove)
+    if (!isMobile) window.addEventListener("mousemove", handleMouseMove)
 
     // Particles
     const particles = Array.from({ length: 160 }).map(() => {
-      const z = Math.random() ** 2 // more small/deep dots
+      const z = Math.random() ** 2
       return {
         x: Math.random(),
         y: Math.random(),
@@ -55,7 +66,7 @@ export default function ParticleBackground() {
       }
     })
 
-    // Robust resize (prevents compounded scaling)
+    // Resize
     const resize = () => {
       w = window.innerWidth
       h = window.innerHeight
@@ -63,19 +74,17 @@ export default function ParticleBackground() {
       canvas.style.height = h + "px"
       canvas.width = Math.floor(w * DPR)
       canvas.height = Math.floor(h * DPR)
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0) // reset + scale
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
     }
     resize()
     window.addEventListener("resize", resize)
 
     const loop = () => {
-      // Smoothly follow mouse only if motion enabled
-      if (enabled) {
+      if (enabled && !isMobile) {
         mouse.x += (target.x - mouse.x) * 0.05
         mouse.y += (target.y - mouse.y) * 0.05
       }
 
-      // Clear then background
       ctx.clearRect(0, 0, w, h)
       const bg = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h))
       bg.addColorStop(0, "rgba(8,14,24,1)")
@@ -84,9 +93,8 @@ export default function ParticleBackground() {
       ctx.fillRect(0, 0, w, h)
 
       const time = Date.now() * 0.02
-      const hue = (200 + Math.sin(time / 2000) * 60) % 360 // cyan?blue?indigo
+      const hue = (200 + Math.sin(time / 2000) * 60) % 360
 
-      // Advance + project
       const projected = particles.map((p) => {
         if (enabled) {
           p.x += p.vx
@@ -94,28 +102,21 @@ export default function ParticleBackground() {
           if (p.x < 0 || p.x > 1) p.vx *= -1
           if (p.y < 0 || p.y > 1) p.vy *= -1
         }
-        const parallaxX = enabled ? (mouse.x - 0.5) * p.z * 0.12 : 0
-        const parallaxY = enabled ? (mouse.y - 0.5) * p.z * 0.12 : 0
-        return {
-          ...p,
-          px: (p.x + parallaxX) * w,
-          py: (p.y + parallaxY) * h,
-        }
+        const parallaxX = !isMobile && enabled ? (mouse.x - 0.5) * p.z * 0.12 : 0
+        const parallaxY = !isMobile && enabled ? (mouse.y - 0.5) * p.z * 0.12 : 0
+        return { ...p, px: (p.x + parallaxX) * w, py: (p.y + parallaxY) * h }
       })
 
-      // Particles (make them clearly visible)
       ctx.globalCompositeOperation = "source-over"
       projected.forEach((p) => {
         ctx.beginPath()
         ctx.arc(p.px, p.py, p.r, 0, Math.PI * 2)
-        // brighter lightness, stronger alpha
         const L = 72 + p.z * 18
         const A = Math.min(1, 0.75 * p.a + 0.25)
         ctx.fillStyle = `hsla(${hue}, 100%, ${L}%, ${A})`
         ctx.fill()
       })
 
-      // Lines
       for (let i = 0; i < projected.length; i++) {
         for (let j = i + 1; j < projected.length; j++) {
           const a = projected[i], b = projected[j]
@@ -134,7 +135,6 @@ export default function ParticleBackground() {
         }
       }
 
-      // Soft bloom overlay (lighter only here)
       const bloom = ctx.createRadialGradient(
         w / 2, h / 2, 0,
         w / 2, h / 2, Math.max(w, h) * 0.8
@@ -154,9 +154,9 @@ export default function ParticleBackground() {
     return () => {
       cancelAnimationFrame(rafRef.current)
       window.removeEventListener("resize", resize)
-      window.removeEventListener("mousemove", handleMouseMove)
+      if (!isMobile) window.removeEventListener("mousemove", handleMouseMove)
     }
-  }, [enabled])
+  }, [enabled, isMobile])
 
   return (
     <canvas
