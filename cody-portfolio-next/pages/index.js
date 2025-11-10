@@ -8,7 +8,6 @@ export default function Home() {
   const featured = data.projects.filter((p) => p.featured)
 
   useEffect(() => {
-    // slight delay for a smoother fade
     const timer = setTimeout(() => setIsVisible(true), 100)
     return () => clearTimeout(timer)
   }, [])
@@ -17,24 +16,23 @@ export default function Home() {
     <>
       <div
         className={`transition-all duration-1000 ease-out transform ${
-          isVisible
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-4'
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
         {/* ---- Hero Section ---- */}
-        <section className="text-center py-10">
-<h1
-  className="text-5xl md:text-7xl font-display font-bold animated-gradient leading-[1.1] pb-2"
->
-  Game Programmer
-</h1>
-<p className="mt-4 text-white/80 max-w-2xl mx-auto leading-relaxed font-sans">
-  Specializing in gameplay systems, Unity3D, and AI. I build polished, performant player experiences across mobile and desktop.
-</p>
+        <section className="text-center py-12 px-4">
+          <h1
+            className="text-4xl sm:text-5xl md:text-7xl font-display font-bold animated-gradient leading-tight break-words"
+          >
+            Cody Way <br className="block sm:hidden" />
+            <span className="text-cyan-300">Game Programmer</span>
+          </h1>
 
+          <p className="mt-4 text-white/80 max-w-2xl mx-auto leading-relaxed font-sans text-base sm:text-lg">
+            Specializing in gameplay systems, Unity3D, and AI. I build polished, performant player experiences across mobile and desktop.
+          </p>
 
-          <div className="mt-6 flex justify-center gap-3">
+          <div className="mt-6 flex justify-center gap-3 flex-wrap">
             <Link href="/projects" className="btn btn-primary">
               View Projects
             </Link>
@@ -45,10 +43,10 @@ export default function Home() {
         </section>
 
         {/* ---- Featured Projects ---- */}
-        <section className="mt-12">
-<h2 className="text-2xl font-display font-semibold gradient-text mb-4">
-  Featured Projects
-</h2>
+        <section className="mt-12 px-4">
+          <h2 className="text-2xl font-display font-semibold gradient-text mb-4 text-center">
+            Featured Projects
+          </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {featured.map((p) => (
               <ProjectCard key={p.slug} project={p} />
@@ -57,9 +55,11 @@ export default function Home() {
         </section>
 
         {/* ---- About Preview ---- */}
-        <section className="mt-14 grid md:grid-cols-3 gap-6 items-center">
+        <section className="mt-14 grid md:grid-cols-3 gap-6 items-center px-4">
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-display font-semibold gradient-text mb-4">About Me</h2>
+            <h2 className="text-2xl font-display font-semibold gradient-text mb-4">
+              About Me
+            </h2>
             <p className="mt-3 text-white/80">
               I’m a gameplay programmer focused on Unity and C#. I enjoy
               building AI systems, moment-to-moment mechanics, and the tooling
@@ -90,12 +90,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center md:text-left">
             <h4 className="font-semibold">Get in touch</h4>
             <p className="text-white/80 mt-2">
               Open to gameplay programming roles. Let’s talk!
             </p>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex justify-center md:justify-start gap-3 flex-wrap">
               <a
                 href="mailto:gameprogrammercody@gmail.com"
                 className="btn btn-primary"
