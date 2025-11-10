@@ -98,10 +98,10 @@ export default function About() {
               </a>
               <br />
               <a
-                href="https://linkedin.com/in/cody-way-370a419a"
+                href="linkedin.com/in/cody-way"
                 className="text-cyan-300 hover:underline"
               >
-                linkedin.com/in/cody-way-370a419a
+                linkedin.com/in/cody-way
               </a>
             </p>
 

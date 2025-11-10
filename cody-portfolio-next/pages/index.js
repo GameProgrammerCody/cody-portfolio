@@ -103,7 +103,7 @@ export default function Home() {
                 Email Me
               </a>
               <a
-                href="https://linkedin.com/in/cody-way-370a419a"
+                href="https://linkedin.com/in/cody-way"
                 className="btn btn-ghost"
               >
                 LinkedIn
