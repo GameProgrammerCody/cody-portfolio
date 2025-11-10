@@ -162,18 +162,15 @@ export default function Layout({ children }) {
         ref={footerRef}
         className="relative mt-10 border-t border-cyan-400/20 bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-indigo-950/40 backdrop-blur-md overflow-hidden group"
       >
-        {/* Subtle glow fade */}
         <div
           className={`absolute -top-24 left-1/2 -translate-x-1/2 w-[140%] h-48 
                       bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.18)_0%,rgba(60,120,255,0.1)_40%,transparent_80%)]
                       blur-[100px] transition-all duration-[2000ms] ease-out
                       ${footerVisible ? 'opacity-90 scale-100' : 'opacity-0 scale-75'}`}
         />
-
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-cyan-400/50 via-blue-400/50 to-transparent"></div>
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-3 gap-8 text-sm">
-          {/* --- Column 1 --- */}
           <div className="space-y-2">
             <h3 className="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
               CODY WAY
@@ -181,8 +178,6 @@ export default function Layout({ children }) {
             <p className="text-white/60">Gameplay Programmer & Systems Developer</p>
             <p className="text-white/50">© {new Date().getFullYear()} Cody Way</p>
           </div>
-
-          {/* --- Column 2: Explore --- */}
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
               Explore
@@ -193,8 +188,6 @@ export default function Layout({ children }) {
             <Link href="/about" className="text-white/60 hover:text-cyan-300 transition-colors">About</Link>
             <Link href="/resume" className="text-white/60 hover:text-cyan-300 transition-colors">Resume</Link>
           </div>
-
-          {/* --- Column 3: Contact --- */}
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
               Contact
@@ -208,14 +201,13 @@ export default function Layout({ children }) {
             </a>
           </div>
         </div>
-
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-blue-400/40"></div>
       </footer>
     </div>
   )
 }
 
-/* --- Galaxy Toggle (improved) --- */
+/* --- Galaxy Toggle (old icon restored + mobile-safe tooltip) --- */
 function GalaxyToggle() {
   const [enabled, setEnabled] = useState(() => {
     if (typeof window === "undefined") return true
@@ -223,16 +215,18 @@ function GalaxyToggle() {
     return saved !== "true"
   })
   const [showHint, setShowHint] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
     const seen = sessionStorage.getItem("seenGalaxyHint")
-    if (!seen) {
+    if (!seen && !isMobile) {
       setShowHint(true)
       sessionStorage.setItem("seenGalaxyHint", "true")
       const timer = setTimeout(() => setShowHint(false), 2000)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [isMobile])
 
   const toggle = () => {
     const newValue = !enabled
@@ -250,37 +244,41 @@ function GalaxyToggle() {
         onClick={toggle}
         className={`relative p-2 rounded-full border backdrop-blur-sm transition-all duration-500
           ${enabled
-            ? "border-cyan-400/50 text-cyan-200 bg-black/40 shadow-[0_0_15px_rgba(0,255,255,0.25)] hover:shadow-[0_0_25px_rgba(0,255,255,0.4)]"
-            : "border-blue-400/40 text-blue-300 bg-black/30 shadow-[0_0_10px_rgba(100,160,255,0.25)] hover:shadow-[0_0_20px_rgba(100,160,255,0.35)]"
+            ? "border-cyan-400/50 text-cyan-200 bg-black/40 shadow-[0_0_15px_rgba(0,255,255,0.25)]"
+            : "border-blue-400/40 text-blue-300 bg-black/30 shadow-[0_0_10px_rgba(100,160,255,0.25)]"
           }`}
         aria-label="Toggle motion effects"
       >
+        {/* Restored original orbit icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.8"
-          className={`w-5 h-5 transition-transform duration-700 ${
+          className={`relative w-5 h-5 transition-transform duration-700 ${
             enabled ? "rotate-0 text-cyan-300" : "rotate-180 text-blue-300"
           }`}
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M12 3c-4 0-7 3-7 7 0 2.8 2 5 4.5 5 2 0 3.5-1.5 3.5-3.5S13 8 15 8c2.5 0 4 2 4 4.5S17 17 14 17H9"
+            d="M12 3c2.5 0 4 2 4 4.5S14 12 12 12s-4 2.5-4 4.5S9.5 21 12 21m0-18a9 9 0 100 18 9 9 0 000-18z"
           />
         </svg>
       </button>
 
-      <div
-        className={`absolute top-full mt-2 px-2 py-1 text-[11px] rounded-md border text-cyan-200 bg-black/80 border-cyan-400/30 shadow-[0_0_10px_rgba(0,255,255,0.25)]
-          transition-all duration-300 ${
-            showHint || "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
-          }`}
-      >
-        Motion: {enabled ? "On" : "Off"}
-      </div>
+      {/* Tooltip only on desktop */}
+      {!isMobile && (
+        <div
+          className={`absolute top-full mt-2 px-2 py-1 text-[11px] rounded-md border text-cyan-200 bg-black/80 border-cyan-400/30 shadow-[0_0_10px_rgba(0,255,255,0.25)]
+            transition-all duration-300 ${
+              showHint || "opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0"
+            }`}
+        >
+          Motion: {enabled ? "On" : "Off"}
+        </div>
+      )}
     </div>
   )
 }
