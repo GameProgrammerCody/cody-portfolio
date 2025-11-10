@@ -24,8 +24,7 @@ export default function Home() {
           <h1
             className="text-4xl sm:text-5xl md:text-7xl font-display font-bold animated-gradient leading-tight break-words"
           >
-            Cody Way <br className="block sm:hidden" />
-            <span className="text-cyan-300">Game Programmer</span>
+            Game Programmer
           </h1>
 
           <p className="mt-4 text-white/80 max-w-2xl mx-auto leading-relaxed font-sans text-base sm:text-lg">
