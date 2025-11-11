@@ -77,10 +77,12 @@ h1, h2, h3 {
   padding-bottom: 0.2em;
 }
 
-/* Page fade-out animation */
 body.page-fade-out {
     opacity: 0;
     transition: opacity 0.35s ease;
     pointer-events: none;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
 }
 
