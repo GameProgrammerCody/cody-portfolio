@@ -2,11 +2,21 @@ import '../styles/globals.css'
 import Layout from '../src/components/Layout'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 export default function MyApp({ Component, pageProps, router }) {
     const [enabled, setEnabled] = useState(true)
+    const nextRouter = useRouter()
 
+    // ✅ Disable Next.js auto-scroll
+    useEffect(() => {
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual'
+        }
+    }, [])
+
+    // ✅ Handle reduce motion toggle
     useEffect(() => {
         if (typeof window === 'undefined') return
         const saved = localStorage.getItem('reduceMotion')
@@ -17,17 +27,16 @@ export default function MyApp({ Component, pageProps, router }) {
         return () => window.removeEventListener('motionToggle', handleToggle)
     }, [])
 
-    // 👉 Use a ref flag to prevent double-scrolls
+    // ✅ Scroll to top after animation completes
     const handleAnimationComplete = () => {
-        // Scroll *after* fade-in completes, not before
-        requestAnimationFrame(() => {
+        // Delay slightly to ensure layout is settled
+        setTimeout(() => {
             window.scrollTo({ top: 0, behavior: 'instant' })
-        })
+        }, 60)
     }
 
     return (
         <Layout>
-            {/* ✅ Global site meta */}
             <Head>
                 <title>Cody Way — Game Programmer</title>
                 <meta
@@ -37,6 +46,7 @@ export default function MyApp({ Component, pageProps, router }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#00FFFF" />
 
+                {/* --- Open Graph --- */}
                 <meta property="og:title" content="Cody Way — Game Programmer" />
                 <meta
                     property="og:description"
@@ -46,6 +56,7 @@ export default function MyApp({ Component, pageProps, router }) {
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://codyway.dev" />
 
+                {/* --- Twitter --- */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Cody Way — Game Programmer" />
                 <meta
@@ -57,7 +68,6 @@ export default function MyApp({ Component, pageProps, router }) {
                 <link rel="icon" href="/favicon.png" type="image/png" />
             </Head>
 
-            {/* ✅ AnimatePresence handles route transitions */}
             <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                     key={router.asPath}
@@ -69,7 +79,7 @@ export default function MyApp({ Component, pageProps, router }) {
                         ease: [0.4, 0, 0.2, 1],
                     }}
                     className="relative z-10 min-h-screen will-change-transform"
-                    onAnimationComplete={handleAnimationComplete} // ← 🎯 new hook
+                    onAnimationComplete={handleAnimationComplete}
                 >
                     <Component {...pageProps} />
                 </motion.div>
