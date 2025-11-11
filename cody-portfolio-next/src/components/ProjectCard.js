@@ -1,9 +1,9 @@
-import Link from 'next/link'
+import SmartLink from './SmartLink'
 import SmartImage from './SmartImage'
 
 export default function ProjectCard({ project: p }) {
     return (
-        <Link
+        <SmartLink
             href={`/projects/${p.slug}`}
             className="group block rounded-2xl border border-white/10 bg-black/30 overflow-hidden flex flex-col
                  transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(0,255,255,0.25)]
@@ -104,6 +104,6 @@ export default function ProjectCard({ project: p }) {
           }
         }
       `}</style>
-        </Link>
+        </SmartLink>
     )
 }

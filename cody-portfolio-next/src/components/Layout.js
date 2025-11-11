@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from './SmartLink'
 import { useEffect, useRef, useState } from 'react'
 import ParticleBackground from './ParticleBackground'
 
@@ -64,14 +64,14 @@ export default function Layout({ children }) {
       >
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           {/* Logo / Name */}
-          <Link
+          <SmartLink
             href="/"
             className="font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r 
                        from-cyan-400 via-blue-300 to-indigo-400 bg-[length:200%_auto]
                        animate-[shimmer_10s_ease-in-out_infinite] transition hover:opacity-90 text-lg sm:text-xl"
           >
             CODY WAY
-          </Link>
+          </SmartLink>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex gap-4 text-sm items-center">
@@ -80,7 +80,7 @@ export default function Layout({ children }) {
               { href: '/about', label: 'About' },
               { href: '/resume', label: 'Resume' },
             ].map((item) => (
-              <Link
+              <SmartLink
                 key={item.href}
                 href={item.href}
                 className="relative px-3 py-1 rounded-xl group"
@@ -89,7 +89,7 @@ export default function Layout({ children }) {
                   {item.label}
                 </span>
                 <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
+              </SmartLink>
             ))}
 
             <a
@@ -128,14 +128,14 @@ export default function Layout({ children }) {
               { href: '/about', label: 'About' },
               { href: '/resume', label: 'Resume' },
             ].map((item) => (
-              <Link
+              <SmartLink
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="block text-white/80 hover:text-cyan-300 transition-colors"
               >
                 {item.label}
-              </Link>
+              </SmartLink>
             ))}
 
             <a
@@ -183,10 +183,10 @@ export default function Layout({ children }) {
               Explore
               <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent"></span>
             </h4>
-            <Link href="/" className="text-white/60 hover:text-cyan-300 transition-colors">Home</Link>
-            <Link href="/projects" className="text-white/60 hover:text-cyan-300 transition-colors">Projects</Link>
-            <Link href="/about" className="text-white/60 hover:text-cyan-300 transition-colors">About</Link>
-            <Link href="/resume" className="text-white/60 hover:text-cyan-300 transition-colors">Resume</Link>
+            <SmartLink href="/" className="text-white/60 hover:text-cyan-300 transition-colors">Home</SmartLink>
+            <SmartLink href="/projects" className="text-white/60 hover:text-cyan-300 transition-colors">Projects</SmartLink>
+            <SmartLink href="/about" className="text-white/60 hover:text-cyan-300 transition-colors">About</SmartLink>
+            <SmartLink href="/resume" className="text-white/60 hover:text-cyan-300 transition-colors">Resume</SmartLink>
           </div>
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">

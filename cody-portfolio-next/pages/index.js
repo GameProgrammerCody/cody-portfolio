@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import data from '../src/data/projects.json'
-import Link from 'next/link'
+import SmartLink from '../src/components/SmartLink'
 import ProjectCard from '../src/components/ProjectCard'
 
 export default function Home() {
@@ -32,12 +32,12 @@ export default function Home() {
           </p>
 
           <div className="mt-6 flex justify-center gap-3 flex-wrap">
-            <Link href="/projects" className="btn btn-primary">
+            <SmartLink href="/projects" className="btn btn-primary">
               View Projects
-            </Link>
-            <Link href="/resume" className="btn btn-ghost">
+            </SmartLink>
+            <SmartLink href="/resume" className="btn btn-ghost">
               Download Resume
-            </Link>
+            </SmartLink>
           </div>
         </section>
 
@@ -83,9 +83,9 @@ export default function Home() {
               ))}
             </div>
             <div className="mt-6">
-                          <Link href="/about" scroll={false} className="btn btn-ghost">
+                          <SmartLink href="/about" className="btn btn-ghost">
                 More About Me
-              </Link>
+              </SmartLink>
             </div>
           </div>
 

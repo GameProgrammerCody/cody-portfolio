@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
+import SmartLink from '../src/components/SmartLink'
 import data from '../../src/data/projects.json'
 import SmartImage from '../../src/components/SmartImage'
 
@@ -132,9 +132,9 @@ export default function Project() {
                 }`}
         >
             {/* Back link */}
-            <Link href="/projects" className="text-sm text-cyan-300 hover:underline fade-up-stagger">
+            <SmartLink href="/projects" className="text-sm text-cyan-300 hover:underline fade-up-stagger">
                 ← Back to Projects
-            </Link>
+            </SmartLink>
 
             {/* Title */}
             <h1 className="text-3xl md:text-5xl font-black mt-4 text-center drop-shadow-[0_0_15px_rgba(0,255,255,0.25)] fade-up-stagger">
@@ -323,24 +323,24 @@ export default function Project() {
             <div className="mt-24 flex items-center justify-between text-sm fade-up-stagger max-w-4xl mx-auto px-4">
                 <div>
                     {prev ? (
-                        <Link
+                        <SmartLink
                             href={`/projects/${prev.slug}`}
                             className="inline-flex items-center gap-2 text-cyan-300 hover:text-white transition"
                         >
                             ← {prev.title}
-                        </Link>
+                        </SmartLink>
                     ) : (
                         <span />
                     )}
                 </div>
                 <div>
                     {next ? (
-                        <Link
+                        <SmartLink
                             href={`/projects/${next.slug}`}
                             className="inline-flex items-center gap-2 text-cyan-300 hover:text-white transition"
                         >
                             {next.title} →
-                        </Link>
+                        </SmartLink>
                     ) : (
                         <span />
                     )}
