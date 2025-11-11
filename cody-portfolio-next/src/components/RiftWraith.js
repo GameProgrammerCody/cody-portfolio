@@ -53,7 +53,6 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         speed: 0.0025,
         eatRadius: 0.02,
         nextSeekAt: 0,
-        facing: 1,           // 1 = right, -1 = left
     };
 
     // -------------------------------
@@ -261,10 +260,6 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                         creature.x += (dx / len) * step;
                         creature.y += (dy / len) * step;
 
-                        // --- Direction tracking ---
-                        if (dx < 0) creature.facing = -1;
-                        else if (dx > 0) creature.facing = 1;
-
                         // trail
                         trail.push({ x: prevX, y: prevY, life: 1.0 });
                         if (trail.length > maxTrail) trail.shift();
@@ -375,14 +370,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
             const pulseScale = 1 + creature.pulse * 0.4;
 
             if (img && img.complete) {
-                ctx.scale(creature.facing, 1);
-                ctx.drawImage(
-                    img,
-                    -s * pulseScale * creature.facing,
-                    -s * pulseScale,
-                    s * 2 * pulseScale,
-                    s * 2 * pulseScale
-                );
+                ctx.drawImage(img, -s * pulseScale, -s * pulseScale, s * 2 * pulseScale, s * 2 * pulseScale);
             } else {
                 const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, s);
                 grd.addColorStop(0, "rgba(160,220,255,0.7)");
