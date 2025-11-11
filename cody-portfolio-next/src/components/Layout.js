@@ -2,27 +2,6 @@ import SmartLink from './SmartLink'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import ParticleBackground from './ParticleBackground'
-import { Inter, Orbitron } from 'next/font/google'
-
-const inter = Inter({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-inter',
-})
-
-const orbitron = Orbitron({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-orbitron',
-})
-
-export default function MyApp({ Component, pageProps }) {
-    return (
-        <main className={`${inter.variable} ${orbitron.variable}`}>
-            <Component {...pageProps} />
-        </main>
-    )
-}
 
 // Inject shimmer animation if not present
 if (typeof window !== "undefined" && !document.getElementById("shimmer-anim")) {
