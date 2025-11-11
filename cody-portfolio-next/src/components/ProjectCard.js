@@ -69,21 +69,41 @@ export default function ProjectCard({ project: p }) {
                     ))}
                 </div>
 
-                {/* “View Project” indicator (visual only now) */}
-                <div className="mt-4 relative inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium
-                        text-cyan-300 border border-cyan-400/40 bg-black/30
-                        overflow-hidden transition-all duration-300 group-hover:text-white">
+                {/* “View Project” area (pulses on hover) */}
+                <div
+                    className="mt-4 relative inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium
+                     text-cyan-300 border border-cyan-400/40 bg-black/30
+                     overflow-hidden transition-all duration-300 hover:text-white hover:shadow-[0_0_20px_rgba(0,255,255,0.25)]
+                     hover:animate-[pulseGlow_2s_ease-in-out_infinite]"
+                >
+                    {/* Soft gradient background */}
                     <span
                         className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 
-                       group-hover:opacity-100 transition-opacity duration-300 rounded-xl"
+                       group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"
                     ></span>
+
+                    {/* Text */}
                     <span className="relative z-10">View Project</span>
+
+                    {/* Animated underline */}
                     <span
                         className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 
-                       scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"
+                       scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"
                     ></span>
                 </div>
             </div>
+
+            {/* --- Local CSS keyframes --- */}
+            <style jsx>{`
+        @keyframes pulseGlow {
+          0%, 100% {
+            box-shadow: 0 0 0 rgba(0, 255, 255, 0);
+          }
+          50% {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+          }
+        }
+      `}</style>
         </Link>
     )
 }
