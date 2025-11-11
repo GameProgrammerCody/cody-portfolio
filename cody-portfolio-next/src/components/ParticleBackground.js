@@ -114,21 +114,33 @@ export default function ParticleBackground() {
             creature: [
                 "/assets/creature/creature_1.png",
                 "/assets/creature/creature_2.png",
-                "/assets/creature/creature_3.png"
+                "/assets/creature/creature_3.png",
             ],
             portal: "/assets/creature/portal.png",
         }
+
         const images = { creature: [], portal: null }
-        SPRITES.creature.forEach((src) => {
-            const img = new Image()
-            img.src = src
-            images.creature.push(img)
-        })
-        if (SPRITES.portal) {
-            const imgP = new Image()
-            imgP.src = SPRITES.portal
-            images.portal = imgP
+        let allLoaded = false
+
+        function loadImage(src) {
+            return new Promise((resolve) => {
+                const img = new Image()
+                img.onload = () => resolve(img)
+                img.onerror = () => resolve(null)
+                img.src = src
+            })
         }
+
+        // preload all sprites safely
+        Promise.all([
+            ...SPRITES.creature.map(loadImage),
+            loadImage(SPRITES.portal),
+        ]).then((res) => {
+            images.creature = res.slice(0, 3).filter(Boolean)
+            images.portal = res[3]
+            allLoaded = true
+        })
+
 
         const creature = {
             active: false,
@@ -201,6 +213,10 @@ export default function ParticleBackground() {
 
         // ---- Main loop ----
         const loop = () => {
+            if (!allLoaded) {
+                rafRef.current = requestAnimationFrame(loop)
+                return
+            }
             if (enabled && !isMobile) {
                 mouse.x += (target.x - mouse.x) * 0.05
                 mouse.y += (target.y - mouse.y) * 0.05
