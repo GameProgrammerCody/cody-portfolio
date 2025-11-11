@@ -21,10 +21,8 @@ export default function Project() {
     const [direction, setDirection] = useState('next')
     const containerRef = useRef(null)
 
-    // --- Filter only visible projects ---
     const visibleProjects = data.projects.filter(p => p.visible !== false)
 
-    // Smooth fade between projects
     useEffect(() => {
         if (!slug) return
         if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
@@ -33,21 +31,17 @@ export default function Project() {
 
         setVisible(false)
         const timer = setTimeout(() => {
-            const i = visibleProjects.findIndex((p) => p.slug === slug)
+            const i = visibleProjects.findIndex(p => p.slug === slug)
             if (i >= 0) {
                 setIdx(i)
                 setProject(visibleProjects[i])
             }
-            setTimeout(() => {
-                setVisible(true)
-                //window.scrollTo({ top: 0, behavior: 'smooth' })
-            }, 100)
+            setTimeout(() => setVisible(true), 100)
         }, 200)
 
         return () => clearTimeout(timer)
     }, [slug])
 
-    // Scroll-triggered animations
     useEffect(() => {
         if (!project) return
         const elements = document.querySelectorAll('.fade-up-stagger')
@@ -67,10 +61,8 @@ export default function Project() {
         return () => observer.disconnect()
     }, [project])
 
-    // Keyboard navigation for lightbox
     useEffect(() => {
         if (!lightbox.open) return
-
         const handleKey = (e) => {
             if (e.key === 'Escape') {
                 setLightbox({ open: false, index: 0 })
@@ -80,7 +72,6 @@ export default function Project() {
                 handleNext()
             }
         }
-
         window.addEventListener('keydown', handleKey)
         return () => window.removeEventListener('keydown', handleKey)
     }, [lightbox.open, project])
@@ -116,7 +107,6 @@ export default function Project() {
     if (!slug || !project)
         return <p className="p-10 text-center text-white/60">Loading…</p>
 
-    // --- Prev / Next ignoring hidden projects ---
     const prev = idx > 0 ? visibleProjects[idx - 1] : null
     const next =
         idx >= 0 && idx < visibleProjects.length - 1
@@ -132,19 +122,25 @@ export default function Project() {
                 }`}
         >
             {/* Back link */}
-            <Link href="/projects" className="text-sm text-cyan-300 hover:underline fade-up-stagger">
+            <Link
+                href="/projects"
+                className="text-sm text-cyan-300 hover:underline fade-up-stagger"
+            >
                 ← Back to Projects
             </Link>
 
-            {/* Title */}
-            <h1 className="text-3xl md:text-5xl font-black mt-4 text-center drop-shadow-[0_0_15px_rgba(0,255,255,0.25)] fade-up-stagger">
-                <SmartImage
-                    slug={project.slug}
-                    base="title"
-                    className="max-h-24 object-contain mx-auto"
-                    alt={project.title}
-                />
-            </h1>
+            {/* --- Fixed title logo --- */}
+            <div className="mt-6 flex justify-center fade-up-stagger">
+                <div className="relative h-20 md:h-24 w-full max-w-[520px]">
+                    <SmartImage
+                        slug={project.slug}
+                        base="title"
+                        className="h-full"
+                        imgClassName="object-contain"
+                        alt={project.title}
+                    />
+                </div>
+            </div>
 
             {/* Hero image */}
             <div className="mt-6 aspect-video rounded-2xl overflow-hidden border border-cyan-400/10 bg-black/50 relative group fade-up-stagger">
@@ -160,12 +156,18 @@ export default function Project() {
             {/* Tags */}
             <div className="mt-6 flex flex-wrap gap-2 justify-center text-sm fade-up-stagger">
                 {(project.tags || []).map((t) => (
-                    <span key={t} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                    <span
+                        key={t}
+                        className="px-2 py-1 rounded-full bg-white/5 border border-white/10"
+                    >
                         {t}
                     </span>
                 ))}
                 {(project.platforms || []).map((p) => (
-                    <span key={p} className="px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                    <span
+                        key={p}
+                        className="px-2 py-1 rounded-full bg-white/5 border border-white/10"
+                    >
                         {p}
                     </span>
                 ))}
@@ -178,8 +180,8 @@ export default function Project() {
                         <div key={i} className="max-w-4xl mx-auto px-4 fade-up-stagger">
                             <h2
                                 className="text-2xl md:text-3xl font-display font-semibold text-center mb-6 
-                             bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent
-                             drop-shadow-[0_0_12px_rgba(0,255,255,0.2)] tracking-wide"
+                 bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent
+                 drop-shadow-[0_0_12px_rgba(0,255,255,0.2)] tracking-wide"
                             >
                                 {section.title}
                             </h2>
@@ -251,7 +253,7 @@ export default function Project() {
                                 key={i}
                                 onClick={() => setLightbox({ open: true, index: i })}
                                 className="aspect-video rounded-xl border border-white/10 bg-white/5 overflow-hidden 
-                           hover:border-cyan-400/40 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)] fade-up-stagger"
+                   hover:border-cyan-400/40 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)] fade-up-stagger"
                             >
                                 <img
                                     src={src}
@@ -262,7 +264,6 @@ export default function Project() {
                         ))}
                     </div>
 
-                    {/* Lightbox */}
                     {lightbox.open && (
                         <div
                             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animate-fadeIn"
@@ -319,7 +320,7 @@ export default function Project() {
                 </section>
             )}
 
-            {/* Prev / Next (ignores hidden) */}
+            {/* Prev / Next */}
             <div className="mt-24 flex items-center justify-between text-sm fade-up-stagger max-w-4xl mx-auto px-4">
                 <div>
                     {prev ? (
