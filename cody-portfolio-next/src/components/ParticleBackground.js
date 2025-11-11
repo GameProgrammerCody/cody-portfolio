@@ -111,8 +111,12 @@ export default function ParticleBackground() {
 
         // ---- Rift Wraith (idle creature) ----
         const SPRITES = {
-            creature: ["/assets/creature/creature_1.webp", "/assets/creature/creature_2.webp", "/assets/creature/creature_3.webp"],
-            portal: "/assets/creature/portal.webp",
+            creature: [
+                "/assets/creature/creature_1.png",
+                "/assets/creature/creature_2.png",
+                "/assets/creature/creature_3.png"
+            ],
+            portal: "/assets/creature/portal.png",
         }
         const images = { creature: [], portal: null }
         SPRITES.creature.forEach((src) => {
@@ -157,7 +161,7 @@ export default function ParticleBackground() {
         const resetIdle = () => {
             if (idleTimeout) clearTimeout(idleTimeout)
             // If user returns, start despawn if creature is around
-            if (creature.active && !creature.exiting) {
+            if (creature.active && !creature.exiting && !portal.closing) {
                 creature.exiting = true
                 portal.closing = true
                 portal.opening = false
@@ -325,8 +329,10 @@ export default function ParticleBackground() {
                         creature.exiting = false
                     }
                 }
-
-                // seek nearest particle (throttled ~every 80ms)
+                if (particles.length < 5) {
+                    rafRef.current = requestAnimationFrame(loop)
+                    return
+                }                // seek nearest particle (throttled ~every 80ms)
                 const now = performance.now()
                 let targetIdx = -1
                 if (now > creature.nextSeekAt) {
