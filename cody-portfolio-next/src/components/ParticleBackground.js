@@ -163,29 +163,6 @@ export default function ParticleBackground() {
                 ctx.fill()
             })
 
-            // ---- Particle respawn logic ----
-            const desiredCount = isMobile ? 70 : 160;
-            if (particles.length < desiredCount) {
-                // spawn a few new ones per frame until full
-                const toSpawn = Math.min(3, desiredCount - particles.length);
-                for (let i = 0; i < toSpawn; i++) {
-                    const z = Math.random() ** 2;
-                    particles.push({
-                        x: Math.random(),
-                        y: Math.random(),
-                        z,
-                        vx: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
-                        vy: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
-                        r: (0.9 + Math.random() * 1.3) * (0.3 + z),
-                        a: 0.35 + Math.random() * 0.45 * (0.3 + z),
-                        pulse: 0,
-                        burst: 0,
-                        links: [],
-                    });
-                }
-            }
-
-
             // network lines
             for (let i = 0; i < projected.length; i++) {
                 for (let j = i + 1; j < projected.length; j++) {
