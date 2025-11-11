@@ -5,19 +5,38 @@ import fs from "fs";
 
 const images = globSync("public/assets/**/*.{png,jpg,jpeg}", { nocase: true });
 
-console.log(`🧩 Found ${images.length} images to convert...`);
+console.log(`🧠 Found ${images.length} source images...`);
 
 for (const file of images) {
-  const ext = path.extname(file);
-  const out = file.replace(ext, ".webp");
+    const ext = path.extname(file);
+    const base = file.slice(0, -ext.length);
 
-  try {
-    const data = fs.readFileSync(file);
-    await sharp(data).toFormat("webp", { quality: 80 }).toFile(out);
-    console.log(`✔ Converted → ${out}`);
-  } catch (err) {
-    console.error(`❌ Failed: ${file}`, err.message);
-  }
+    const webpPath = `${base}.webp`;
+    const avifPath = `${base}.avif`;
+
+    try {
+        // Skip if WebP already exists
+        if (!fs.existsSync(webpPath)) {
+            await sharp(file)
+                .toFormat("webp", { quality: 80 })
+                .toFile(webpPath);
+            console.log(`✅ Created WebP → ${path.basename(webpPath)}`);
+        } else {
+            console.log(`⚡ Skipped (already exists) → ${path.basename(webpPath)}`);
+        }
+
+        // Skip if AVIF already exists
+        if (!fs.existsSync(avifPath)) {
+            await sharp(file)
+                .toFormat("avif", { quality: 70 })
+                .toFile(avifPath);
+            console.log(`✅ Created AVIF → ${path.basename(avifPath)}`);
+        } else {
+            console.log(`⚡ Skipped (already exists) → ${path.basename(avifPath)}`);
+        }
+    } catch (err) {
+        console.error(`❌ Failed to process ${file}`, err.message);
+    }
 }
 
-console.log("✅ All done!");
+console.log("\n🎉 All conversions complete!");
