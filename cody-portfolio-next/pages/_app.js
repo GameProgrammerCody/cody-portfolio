@@ -2,12 +2,10 @@ import '../styles/globals.css'
 import Layout from '../src/components/Layout'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 export default function MyApp({ Component, pageProps, router }) {
     const [enabled, setEnabled] = useState(true)
-    const nextRouter = useRouter()
 
     useEffect(() => {
         if (typeof window === 'undefined') return
@@ -19,16 +17,13 @@ export default function MyApp({ Component, pageProps, router }) {
         return () => window.removeEventListener('motionToggle', handleToggle)
     }, [])
 
-    // ✅ Scroll to top AFTER route transition completes
-    useEffect(() => {
-        const handleDone = () => {
-            // Delay slightly to sync with fade-in
-            setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 80)
-        }
-
-        nextRouter.events.on('routeChangeComplete', handleDone)
-        return () => nextRouter.events.off('routeChangeComplete', handleDone)
-    }, [nextRouter])
+    // 👉 Use a ref flag to prevent double-scrolls
+    const handleAnimationComplete = () => {
+        // Scroll *after* fade-in completes, not before
+        requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' })
+        })
+    }
 
     return (
         <Layout>
@@ -42,7 +37,6 @@ export default function MyApp({ Component, pageProps, router }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#00FFFF" />
 
-                {/* --- Open Graph / Social --- */}
                 <meta property="og:title" content="Cody Way — Game Programmer" />
                 <meta
                     property="og:description"
@@ -50,9 +44,8 @@ export default function MyApp({ Component, pageProps, router }) {
                 />
                 <meta property="og:image" content="/og-image.png" />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://yourdomain.com" />
+                <meta property="og:url" content="https://codyway.dev" />
 
-                {/* --- Twitter Card --- */}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="Cody Way — Game Programmer" />
                 <meta
@@ -61,7 +54,6 @@ export default function MyApp({ Component, pageProps, router }) {
                 />
                 <meta name="twitter:image" content="/og-image.png" />
 
-                {/* --- Favicon --- */}
                 <link rel="icon" href="/favicon.png" type="image/png" />
             </Head>
 
@@ -77,6 +69,7 @@ export default function MyApp({ Component, pageProps, router }) {
                         ease: [0.4, 0, 0.2, 1],
                     }}
                     className="relative z-10 min-h-screen will-change-transform"
+                    onAnimationComplete={handleAnimationComplete} // ← 🎯 new hook
                 >
                     <Component {...pageProps} />
                 </motion.div>
