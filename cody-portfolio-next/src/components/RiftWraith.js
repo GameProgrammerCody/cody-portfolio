@@ -53,6 +53,9 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         speed: 0.0025,
         eatRadius: 0.02,
         nextSeekAt: 0,
+        facing: 1,           // 1 = right, -1 = left
+        vx: 0,               // smoothed horizontal velocity (for robust facing)
+        vy: 0,
     };
 
     // -------------------------------
@@ -122,6 +125,9 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         creature.tier = 0;
         creature.opacity = 0;
         creature.pulse = 0;
+        creature.vx = 0;
+        creature.vy = 0;
+        creature.facing = 1;
         trail.length = 0;
     };
 
@@ -256,9 +262,23 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                         const dy = t.y - creature.y;
                         const len = Math.hypot(dx, dy) || 1;
                         const step = creature.speed * (enabled ? 1 : 0);
+
+                        // previous pos for trail + velocity
                         const prevX = creature.x, prevY = creature.y;
+
+                        // move
                         creature.x += (dx / len) * step;
                         creature.y += (dy / len) * step;
+
+                        // smoothed velocity (prevents flip jitter)
+                        const ax = creature.x - prevX;
+                        const ay = creature.y - prevY;
+                        creature.vx = creature.vx * 0.85 + ax * 0.15;
+                        creature.vy = creature.vy * 0.85 + ay * 0.15;
+
+                        if (Math.abs(creature.vx) > 1e-5) {
+                            creature.facing = creature.vx > 0 ? 1 : -1;
+                        }
 
                         // trail
                         trail.push({ x: prevX, y: prevY, life: 1.0 });
@@ -362,16 +382,38 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
             ctx.globalAlpha = 0.9 * creature.opacity;
 
             const img = images.creature[Math.min(creature.tier, images.creature.length - 1)];
-            const s = creature.size;
+            const baseSize = creature.size;
             const dx = creature.x * W, dy = creature.y * H;
             const wiggle = Math.sin(Date.now() * 0.006) * 0.15;
+
+            // move origin to creature center, rotate, then flip if needed
             ctx.translate(dx, dy);
             ctx.rotate(wiggle);
             const pulseScale = 1 + creature.pulse * 0.4;
 
             if (img && img.complete) {
-                ctx.drawImage(img, -s * pulseScale, -s * pulseScale, s * 2 * pulseScale, s * 2 * pulseScale);
+                // render size respects the image aspect, anchored at center
+                const iw = img.naturalWidth || img.width || 1;
+                const ih = img.naturalHeight || img.height || 1;
+                const aspect = ih / iw;
+
+                const renderW = baseSize * 2 * pulseScale;       // matches previous visual width
+                const renderH = renderW * aspect;
+
+                // flip horizontally around the center
+                ctx.scale(creature.facing, 1);
+
+                // because we scaled the x-axis, offset must include the sign
+                ctx.drawImage(
+                    img,
+                    -renderW * 0.5 * creature.facing,
+                    -renderH * 0.5,
+                    renderW,
+                    renderH
+                );
             } else {
+                // fallback glow, centered
+                const s = baseSize;
                 const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, s);
                 grd.addColorStop(0, "rgba(160,220,255,0.7)");
                 grd.addColorStop(1, "rgba(0,0,0,0)");
