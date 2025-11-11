@@ -83,7 +83,7 @@ export default function Home() {
               ))}
             </div>
             <div className="mt-6">
-              <Link href="/about" className="btn btn-ghost">
+                          <Link href="/about" scroll={false} className="btn btn-ghost">
                 More About Me
               </Link>
             </div>
