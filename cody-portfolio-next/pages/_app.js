@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps, router }) {
     const handleAnimationComplete = () => {
         // Delay slightly to ensure layout is settled
         setTimeout(() => {
-            //window.scrollTo({ top: 0, behavior: 'instant' })
+            window.scrollTo({ top: 0, behavior: 'instant' })
         }, 60)
     }
 
