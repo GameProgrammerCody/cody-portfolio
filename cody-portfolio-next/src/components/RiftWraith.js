@@ -293,3 +293,4 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
 
     return { updateAndDraw, resetIdle, cancelers };
 }
+
