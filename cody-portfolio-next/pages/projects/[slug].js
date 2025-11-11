@@ -40,7 +40,7 @@ export default function Project() {
             }
             setTimeout(() => {
                 setVisible(true)
-                window.scrollTo({ top: 0, behavior: 'smooth' })
+                //window.scrollTo({ top: 0, behavior: 'smooth' })
             }, 100)
         }, 200)
 
