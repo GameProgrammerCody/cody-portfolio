@@ -9,14 +9,14 @@ export default function MyApp({ Component, pageProps, router }) {
     const [enabled, setEnabled] = useState(true)
     const nextRouter = useRouter()
 
-    // ✅ Disable Next.js auto-scroll restoration
+    // ✅ Disable Next.js auto-scroll
     useEffect(() => {
         if ('scrollRestoration' in window.history) {
             window.history.scrollRestoration = 'manual'
         }
     }, [])
 
-    // ✅ Handle Reduce Motion toggle
+    // ✅ Handle reduce motion toggle
     useEffect(() => {
         if (typeof window === 'undefined') return
         const saved = localStorage.getItem('reduceMotion')
@@ -27,16 +27,13 @@ export default function MyApp({ Component, pageProps, router }) {
         return () => window.removeEventListener('motionToggle', handleToggle)
     }, [])
 
-    // ✅ Clean up fade-out class when route finishes
-    useEffect(() => {
-        const handleRouteChangeComplete = () => {
-            document.body.classList.remove('page-fade-out')
-        }
-        nextRouter.events.on('routeChangeComplete', handleRouteChangeComplete)
-        return () => {
-            nextRouter.events.off('routeChangeComplete', handleRouteChangeComplete)
-        }
-    }, [nextRouter.events])
+    // ✅ Scroll to top after animation completes
+    const handleAnimationComplete = () => {
+        // Delay slightly to ensure layout is settled
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' })
+        }, 60)
+    }
 
     return (
         <Layout>
@@ -82,6 +79,7 @@ export default function MyApp({ Component, pageProps, router }) {
                         ease: [0.4, 0, 0.2, 1],
                     }}
                     className="relative z-10 min-h-screen will-change-transform"
+                    onAnimationComplete={handleAnimationComplete}
                 >
                     <Component {...pageProps} />
                 </motion.div>
