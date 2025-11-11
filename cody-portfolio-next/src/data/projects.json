@@ -6,7 +6,7 @@
       "order": 1,
       "category": "personal",
       "featured": true,
-      "blurb": "A fully featured 3D survival game with a magical theme, built for Android and iOS using Unity and C#. Players gather resources, craft equipment, and battle enemies in a dynamic world.",
+      "blurb": "A 3D survival game with a magical theme, built for Android and iOS using Unity and C#. Players gather resources, craft equipment, and battle enemies in a dynamic world.",
       "tags": ["Unity", "C#", "Mobile"],
       "platforms": ["Android", "iOS"],
       "links": {
@@ -212,9 +212,10 @@
       "title": "Blackjack",
       "category": "personal",
       "featured": false,
+      "visible": false,
       "blurb": "A C++ implementation of the classic casino card game, built from scratch using SDL2 with a modular, state-driven architecture.",
-      "tags": ["C++", "SDL2", "Windows"],
-      "platforms": ["Windows"],
+      "tags": [ "C++", "SDL2", "Windows" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/jJH3H3RNr40"
       },
@@ -339,9 +340,10 @@
       "title": "Space Fighter",
       "category": "personal",
       "featured": false,
+      "visible": false,
       "blurb": "A modern remake of the classic Asteroids arcade game, built in C++ using Allegro5 with dynamic scaling, power-ups, and parallax effects.",
-      "tags": ["C++", "Allegro5", "Windows", "Arcade"],
-      "platforms": ["Windows"],
+      "tags": [ "C++", "Allegro5", "Windows", "Arcade" ],
+      "platforms": [ "Windows" ],
       "media": {
         "thumbnail": "/assets/space-fighter/hero.jpg",
         "hero": "/assets/space-fighter/hero.jpg",
@@ -662,9 +664,10 @@
       "title": "Game Theory",
       "category": "commercial",
       "featured": false,
+      "visible": false,
       "blurb": "An interactive WebGL simulation that teaches foundational concepts of game theory using adjustable decision-based scenarios.",
-      "tags": ["Unity", "C#", "Simulation"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Simulation" ],
+      "platforms": [ "Windows" ],
       "media": {
         "thumbnail": "/assets/game-theory/hero.jpg",
         "hero": "/assets/game-theory/hero.jpg",
