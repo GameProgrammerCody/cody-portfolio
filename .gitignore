@@ -22,3 +22,12 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+*.vsidx
+cody-portfolio-next/.vs/cody-portfolio-next.slnx/FileContentIndex/57d93ca2-b2ed-4e73-bc0a-cb459d69eb04.vsidx
+cody-portfolio-next/.vs/cody-portfolio-next/CopilotIndices/18.0.923.20550/CodeChunks.db-shm
+cody-portfolio-next/.vs/cody-portfolio-next/CopilotIndices/18.0.923.20550/SemanticSymbols.db-shm
+cody-portfolio-next/.vs/cody-portfolio-next/CopilotIndices/18.0.923.20550/SemanticSymbols.db-wal
+cody-portfolio-next/.vs/cody-portfolio-next/CopilotIndices/18.0.923.20550/CodeChunks.db-wal
+cody-portfolio-next/.vs/cody-portfolio-next.slnx/FileContentIndex/57d93ca2-b2ed-4e73-bc0a-cb459d69eb04.vsidx
+*.vsidx
+cody-portfolio-next/.vs/slnx.sqlite
