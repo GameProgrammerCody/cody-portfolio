@@ -10,33 +10,39 @@ console.log(`🧠 Found ${images.length} source images...`);
 for (const file of images) {
     const ext = path.extname(file);
     const base = file.slice(0, -ext.length);
+    const variants = [
+        { suffix: "", width: null },      // full-size
+        { suffix: "@1200", width: 1200 }, // large desktop
+        { suffix: "@600", width: 600 },   // mobile/tablet
+    ];
 
-    const webpPath = `${base}.webp`;
-    const avifPath = `${base}.avif`;
+    for (const { suffix, width } of variants) {
+        const webpPath = `${base}${suffix}.webp`;
+        const avifPath = `${base}${suffix}.avif`;
 
-    try {
-        // Skip if WebP already exists
-        if (!fs.existsSync(webpPath)) {
-            await sharp(file)
-                .toFormat("webp", { quality: 80 })
-                .toFile(webpPath);
-            console.log(`✅ Created WebP → ${path.basename(webpPath)}`);
-        } else {
-            console.log(`⚡ Skipped (already exists) → ${path.basename(webpPath)}`);
+        try {
+            const img = sharp(file);
+            if (width) img.resize({ width, withoutEnlargement: true });
+
+            // --- WebP ---
+            if (!fs.existsSync(webpPath)) {
+                await img.clone().toFormat("webp", { quality: 80 }).toFile(webpPath);
+                console.log(`✅ WebP → ${path.basename(webpPath)}`);
+            } else {
+                console.log(`⚡ Skipped (exists) → ${path.basename(webpPath)}`);
+            }
+
+            // --- AVIF ---
+            if (!fs.existsSync(avifPath)) {
+                await img.clone().toFormat("avif", { quality: 70 }).toFile(avifPath);
+                console.log(`✅ AVIF → ${path.basename(avifPath)}`);
+            } else {
+                console.log(`⚡ Skipped (exists) → ${path.basename(avifPath)}`);
+            }
+        } catch (err) {
+            console.error(`❌ Failed to process ${file}`, err.message);
         }
-
-        // Skip if AVIF already exists
-        if (!fs.existsSync(avifPath)) {
-            await sharp(file)
-                .toFormat("avif", { quality: 70 })
-                .toFile(avifPath);
-            console.log(`✅ Created AVIF → ${path.basename(avifPath)}`);
-        } else {
-            console.log(`⚡ Skipped (already exists) → ${path.basename(avifPath)}`);
-        }
-    } catch (err) {
-        console.error(`❌ Failed to process ${file}`, err.message);
     }
 }
 
-console.log("\n🎉 All conversions complete!");
+console.log("\n🎉 All responsive conversions complete!");
