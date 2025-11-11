@@ -43,6 +43,12 @@ export default function SmartImage({ slug, base = "hero", className = "", alt = 
         );
     }
 
+    // --- Responsive image size hints ---
+    const responsiveSizes =
+        base === "hero"
+            ? "(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1536px) 70vw, 1200px"
+            : "(max-width: 640px) 100vw, (max-width: 1024px) 80vw, (max-width: 1536px) 50vw, 800px";
+
     return (
         <div className={`relative w-full h-full overflow-hidden ${className}`}>
             <picture>
@@ -52,7 +58,7 @@ export default function SmartImage({ slug, base = "hero", className = "", alt = 
                     src={fallbackSrc || `/assets/${slug}/${base}.png`}
                     alt={alt || slug}
                     fill
-                    sizes="(max-width: 768px) 100vw, 800px"
+                    sizes={responsiveSizes}
                     priority={base === "hero"}
                     loading={base === "hero" ? "eager" : "lazy"}
                     decoding="async"
