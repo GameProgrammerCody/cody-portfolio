@@ -131,7 +131,7 @@ export default function Project() {
 
             {/* --- Fixed title logo --- */}
             <div className="mt-6 flex justify-center fade-up-stagger">
-                <div className="relative h-20 md:h-24 w-full max-w-[520px]">
+                <div className="relative h-28 md:h-32 w-full max-w-[640px]">
                     <SmartImage
                         slug={project.slug}
                         base="title"
