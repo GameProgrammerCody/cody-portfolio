@@ -12,14 +12,14 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     const images = { creature: [], portal: null }
     let allLoaded = false
 
-    function loadImage(src) {
-        return new Promise((resolve) => {
+    // ---- load images ----
+    const loadImage = (src) =>
+        new Promise((resolve) => {
             const img = new Image()
             img.onload = () => resolve(img)
             img.onerror = () => resolve(null)
             img.src = src
         })
-    }
 
     Promise.all([...SPRITES.creature.map(loadImage), loadImage(SPRITES.portal)]).then((res) => {
         images.creature = res.slice(0, 3).filter(Boolean)
@@ -27,7 +27,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         allLoaded = true
     })
 
-    // --- core state ---
+    // ---- state ----
     const creature = {
         active: false,
         exiting: false,
@@ -56,44 +56,80 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         closing: false,
     }
 
-    // --- Trail setup ---
     const trail = []
     const maxTrail = 25
 
     const idleMs = 60000
     let idleTimeout = null
+    let respawnCooldown = false
 
-    // --- idle logic (spawns and despawns) ---
+    // ---- functions ----
+    const startPortal = (x, y) => {
+        portal.active = true
+        portal.opening = true
+        portal.closing = false
+        portal.opacity = 0
+        portal.x = x
+        portal.y = y
+    }
+
+    const closePortal = () => {
+        portal.opening = false
+        portal.closing = true
+    }
+
+    const spawnCreature = (x, y) => {
+        creature.active = true
+        creature.exiting = false
+        creature.x = x
+        creature.y = y
+        creature.vx = 0
+        creature.vy = 0
+        creature.size = 28
+        creature.tier = 0
+        creature.opacity = 0
+        trail.length = 0
+
+        // close the portal once creature is out
+        setTimeout(closePortal, 1200)
+    }
+
+    const exitCreature = () => {
+        if (!creature.active || creature.exiting) return
+        creature.exiting = true
+        portal.active = true
+        portal.x = creature.x
+        portal.y = creature.y
+        portal.opening = true
+        portal.closing = false
+    }
+
+    const finishExit = () => {
+        creature.active = false
+        creature.exiting = false
+        closePortal()
+    }
+
+    // ---- idle control ----
     const resetIdle = () => {
         if (idleTimeout) clearTimeout(idleTimeout)
+
+        // If user returns, trigger creature exit
         if (creature.active && !creature.exiting) {
-            // Start exit animation
-            creature.exiting = true
-            portal.closing = true
-            portal.opening = false
-            portal.active = true
+            exitCreature()
         }
+
+        if (respawnCooldown) return
+
         if (enabled && !isMobile) {
             idleTimeout = setTimeout(() => {
-                // Spawn sequence
-                portal.active = true
-                portal.opening = true
-                portal.closing = false
-                portal.opacity = 0
-                portal.x = 0.15 + Math.random() * 0.7
-                portal.y = 0.2 + Math.random() * 0.6
-
+                respawnCooldown = true
+                const spawnX = 0.15 + Math.random() * 0.7
+                const spawnY = 0.2 + Math.random() * 0.6
+                startPortal(spawnX, spawnY)
                 setTimeout(() => {
-                    creature.active = true
-                    creature.exiting = false
-                    creature.x = portal.x
-                    creature.y = portal.y
-                    creature.vx = 0
-                    creature.vy = 0
-                    creature.size = 28
-                    creature.tier = 0
-                    creature.opacity = 0
-                    trail.length = 0
+                    spawnCreature(spawnX, spawnY)
+                    setTimeout(() => (respawnCooldown = false), 5000)
                 }, 400)
             }, idleMs)
         }
@@ -103,11 +139,12 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     cancelers.forEach((evt) => window.addEventListener(evt, resetIdle))
     resetIdle()
 
+    // ---- draw/update ----
     function updateAndDraw(hue, w, h) {
         if (!allLoaded) return
         const now = performance.now()
 
-        // --- Portal draw ---
+        // portal animation
         if (portal.active) {
             if (portal.opening) {
                 portal.opacity = Math.min(1, portal.opacity + 0.05)
@@ -142,22 +179,20 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
             ctx.restore()
         }
 
-        // --- Creature logic ---
+        // creature update
         if (creature.active) {
+            // fade
             if (!creature.exiting) {
                 creature.opacity = Math.min(1, creature.opacity + 0.05)
             } else {
-                creature.opacity = Math.max(0, creature.opacity - 0.06)
+                creature.opacity = Math.max(0, creature.opacity - 0.05)
                 if (creature.opacity <= 0) {
-                    creature.active = false
-                    creature.exiting = false
-                    // Close the portal shortly after disappearing
-                    portal.closing = true
-                    portal.opening = false
+                    finishExit()
+                    return
                 }
             }
 
-            // Find nearest particle
+            // AI movement
             if (particles.length < 5) return
             let targetIdx = -1
             if (now > creature.nextSeekAt) {
@@ -174,7 +209,6 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 creature.nextSeekAt = now + 80
             }
 
-            // Movement toward target
             if (targetIdx >= 0 && !creature.exiting) {
                 const t = particles[targetIdx]
                 const dx = t.x - creature.x
@@ -186,11 +220,9 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 creature.x += (dx / len) * step
                 creature.y += (dy / len) * step
 
-                // Trail update
                 trail.push({ x: prevX, y: prevY, life: 1.0 })
                 if (trail.length > maxTrail) trail.shift()
 
-                // Eat particle
                 if (len < creature.eatRadius) {
                     particles.splice(targetIdx, 1)
                     creature.size = Math.min(creature.maxSize, creature.size + creature.growthPerEat)
@@ -199,28 +231,26 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 }
             }
 
-            // --- Draw trail ---
-            if (trail.length) {
-                ctx.save()
-                ctx.globalCompositeOperation = "lighter"
-                for (let i = 0; i < trail.length; i++) {
-                    const p = trail[i]
-                    p.life -= 0.03
-                    if (p.life <= 0) continue
-                    const px = p.x * w
-                    const py = p.y * h
-                    const grad = ctx.createRadialGradient(px, py, 0, px, py, 35)
-                    grad.addColorStop(0, `rgba(100,200,255,${0.2 * p.life})`)
-                    grad.addColorStop(1, `rgba(0,0,0,0)`)
-                    ctx.fillStyle = grad
-                    ctx.beginPath()
-                    ctx.arc(px, py, 35, 0, Math.PI * 2)
-                    ctx.fill()
-                }
-                ctx.restore()
+            // trail
+            ctx.save()
+            ctx.globalCompositeOperation = "lighter"
+            for (let i = 0; i < trail.length; i++) {
+                const p = trail[i]
+                p.life -= 0.04
+                if (p.life <= 0) continue
+                const px = p.x * w
+                const py = p.y * h
+                const grad = ctx.createRadialGradient(px, py, 0, px, py, 30)
+                grad.addColorStop(0, `rgba(100,200,255,${0.18 * p.life})`)
+                grad.addColorStop(1, `rgba(0,0,0,0)`)
+                ctx.fillStyle = grad
+                ctx.beginPath()
+                ctx.arc(px, py, 30, 0, Math.PI * 2)
+                ctx.fill()
             }
+            ctx.restore()
 
-            // --- Draw creature ---
+            // draw creature
             ctx.save()
             ctx.globalCompositeOperation = "lighter"
             ctx.globalAlpha = 0.85 * creature.opacity
