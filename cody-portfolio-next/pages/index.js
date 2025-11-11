@@ -90,7 +90,7 @@ export default function Home() {
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center md:text-left">
-            <h4 className="font-semibold">Get in touch</h4>
+            <h3 className="font-semibold">Get in touch</h3>
             <p className="text-white/80 mt-2">
               Open to gameplay programming roles. Let’s talk!
             </p>
