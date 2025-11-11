@@ -5,9 +5,9 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {/* Favicon */}
-        <SmartLink rel="icon" type="image/png" href="/favicon.png" />
+        <Link rel="icon" type="image/png" href="/favicon.png" />
         {/* Optional: high-resolution Apple touch icon */}
-        <SmartLink rel="apple-touch-icon" href="/favicon.png" />
+        <Link rel="apple-touch-icon" href="/favicon.png" />
         <meta name="theme-color" content="#0ef" />
       </Head>
       <body>

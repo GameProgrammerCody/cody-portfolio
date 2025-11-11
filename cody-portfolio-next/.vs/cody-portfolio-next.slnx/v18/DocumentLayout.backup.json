@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\styles\\globals.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:styles\\globals.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ProjectCard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Layout.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_document.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\_document.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\[slug].js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\projects\\[slug].js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\projects\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_document.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\_document.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -27,16 +31,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\resume.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLink.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\SmartLink.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\SmartImage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\projects\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\about.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pages\\about.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Layout.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\data\\projects.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -45,18 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ParticleBackground.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ParticleBackground.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\SmartImage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ProjectCard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLinks.js||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\SmartLinks.js||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,37 +62,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "globals.css",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\styles\\globals.css",
-              "RelativeDocumentMoniker": "styles\\globals.css",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\styles\\globals.css",
-              "RelativeToolTip": "styles\\globals.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-11T04:58:09.616Z",
+              "DocumentIndex": 7,
+              "Title": "SmartLink.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLink.js",
+              "RelativeDocumentMoniker": "src\\components\\SmartLink.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLink.js",
+              "RelativeToolTip": "src\\components\\SmartLink.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T05:21:32.582Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
+              "Title": "SmartImage.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js",
+              "RelativeDocumentMoniker": "src\\components\\SmartImage.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js",
+              "RelativeToolTip": "src\\components\\SmartImage.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T05:19:41.736Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "_document.js",
               "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_document.js",
               "RelativeDocumentMoniker": "pages\\_document.js",
               "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_document.js",
               "RelativeToolTip": "pages\\_document.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-11T04:55:26.364Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "resume.js",
               "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\resume.js",
               "RelativeDocumentMoniker": "pages\\resume.js",
@@ -109,7 +118,98 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "index.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js",
+              "RelativeDocumentMoniker": "pages\\index.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js",
+              "RelativeToolTip": "pages\\index.js",
+              "ViewState": "AgIAAEgAAAAAAAAAAAD4v1UAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T04:34:03.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "[slug].js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\[slug].js",
+              "RelativeDocumentMoniker": "pages\\projects\\[slug].js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\[slug].js",
+              "RelativeToolTip": "pages\\projects\\[slug].js",
+              "ViewState": "AgIAAEQBAAAAAAAAAAD4v1EBAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T03:20:32.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_app.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_app.js",
+              "RelativeDocumentMoniker": "pages\\_app.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_app.js",
+              "RelativeToolTip": "pages\\_app.js",
+              "ViewState": "AgIAADcAAAAAAAAAAAD4v0QAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T03:55:38.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Layout.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js",
+              "RelativeDocumentMoniker": "src\\components\\Layout.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js",
+              "RelativeToolTip": "src\\components\\Layout.js",
+              "ViewState": "AgIAAKwAAAAAAAAAAAD4v7wAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T04:20:28.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProjectCard.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js",
+              "RelativeDocumentMoniker": "src\\components\\ProjectCard.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js",
+              "RelativeToolTip": "src\\components\\ProjectCard.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T03:36:20.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "index.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js",
+              "RelativeDocumentMoniker": "pages\\projects\\index.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js",
+              "RelativeToolTip": "pages\\projects\\index.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T03:12:17.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 10,
+              "Title": "about.js",
+              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\about.js",
+              "RelativeDocumentMoniker": "pages\\about.js",
+              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\about.js",
+              "RelativeToolTip": "pages\\about.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-11T04:34:04.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "ParticleBackground.js",
               "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ParticleBackground.js",
               "RelativeDocumentMoniker": "src\\components\\ParticleBackground.js",
@@ -123,123 +223,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "SmartImage.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js",
-              "RelativeDocumentMoniker": "src\\components\\SmartImage.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartImage.js",
-              "RelativeToolTip": "src\\components\\SmartImage.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T04:54:05.377Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "about.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\about.js",
-              "RelativeDocumentMoniker": "pages\\about.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\about.js",
-              "RelativeToolTip": "pages\\about.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T04:34:04.791Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "index.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js",
-              "RelativeDocumentMoniker": "pages\\index.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\index.js",
-              "RelativeToolTip": "pages\\index.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T04:34:03.871Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Layout.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js",
-              "RelativeDocumentMoniker": "src\\components\\Layout.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\Layout.js",
-              "RelativeToolTip": "src\\components\\Layout.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T04:20:28.547Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "index.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js",
-              "RelativeDocumentMoniker": "pages\\projects\\index.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\index.js",
-              "RelativeToolTip": "pages\\projects\\index.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T03:12:17.302Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "[slug].js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\[slug].js",
-              "RelativeDocumentMoniker": "pages\\projects\\[slug].js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\projects\\[slug].js",
-              "RelativeToolTip": "pages\\projects\\[slug].js",
-              "ViewState": "AgIAAEQBAAAAAAAAAAD4v1YBAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T03:20:32.564Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SmartLinks.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLinks.js",
-              "RelativeDocumentMoniker": "src\\components\\SmartLinks.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\SmartLinks.js",
-              "RelativeToolTip": "src\\components\\SmartLinks.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T04:47:49.615Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ProjectCard.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js",
-              "RelativeDocumentMoniker": "src\\components\\ProjectCard.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\components\\ProjectCard.js",
-              "RelativeToolTip": "src\\components\\ProjectCard.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T03:36:20.127Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_app.js",
-              "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_app.js",
-              "RelativeDocumentMoniker": "pages\\_app.js",
-              "ToolTip": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\pages\\_app.js",
-              "RelativeToolTip": "pages\\_app.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T03:55:38.855Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "projects.json",
               "DocumentMoniker": "Z:\\Git\\cody-portfolio\\cody-portfolio-next\\src\\data\\projects.json",
               "RelativeDocumentMoniker": "src\\data\\projects.json",
