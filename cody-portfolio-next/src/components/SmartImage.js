@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function SmartImage({ slug, base = "hero", className = "", alt = "" }) {
+    const router = useRouter();
     const [loaded, setLoaded] = useState(false);
+    const [isHero, setIsHero] = useState(false);
 
-    // --- Decide whether this image is a true hero or just a card preview ---
-    const isHero = base === "hero" && window?.location?.pathname.includes("/projects/");
+    // --- Determine if current route is a project detail page (client-safe) ---
+    useEffect(() => {
+        setIsHero(base === "hero" && router.pathname.includes("/projects/"));
+    }, [router.pathname, base]);
+
     const prefix = `/assets/${slug}/${base}`;
 
     // --- Responsive sizing rules ---
