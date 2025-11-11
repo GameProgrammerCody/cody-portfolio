@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import SmartLink from '../src/components/SmartLink'
 
 export default function MyApp({ Component, pageProps, router }) {
     const [enabled, setEnabled] = useState(true)
