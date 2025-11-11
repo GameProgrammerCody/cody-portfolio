@@ -1,4 +1,5 @@
 import SmartLink from './SmartLink'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import ParticleBackground from './ParticleBackground'
 
