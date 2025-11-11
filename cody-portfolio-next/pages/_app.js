@@ -49,7 +49,7 @@ export default function MyApp({ Component, pageProps, router }) {
     }
 
     return (
-        <main className={`${inter.variable} ${orbitron.variable}`}>
+        <main className={`${inter.variable} ${orbitron.variable} font-sans`}>
             <Layout>
                 <Head>
                     <title>Cody Way — Game Programmer</title>

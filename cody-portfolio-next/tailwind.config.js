@@ -8,10 +8,10 @@ module.exports = {
   theme: {
     extend: {
       /* --- Font families --- */
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],       // default body text
-        display: ['Orbitron', 'sans-serif'], // headings, logo, UI
-      },
+          fontFamily: {
+              sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+              orbitron: ['var(--font-orbitron)', 'system-ui', 'sans-serif'],
+          },
 
       /* --- Keyframes and animations --- */
       keyframes: {

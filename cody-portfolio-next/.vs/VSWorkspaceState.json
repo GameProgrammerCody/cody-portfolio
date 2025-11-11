@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\pages",
+    "\\pages\\projects",
+    "\\src",
+    "\\src\\components",
+    "\\src\\data",
+    "\\styles"
   ],
-  "SelectedNode": "\\.next",
+  "SelectedNode": "\\styles\\globals.css",
   "PreviewInSolutionExplorer": false
 }
