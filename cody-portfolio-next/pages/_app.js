@@ -65,7 +65,7 @@ export default function MyApp({ Component, pageProps, router }) {
                 />
                 <meta name="twitter:image" content="/og-image.png" />
 
-                <SmartLink rel="icon" href="/favicon.png" type="image/png" />
+                <link rel="icon" href="/favicon.png" type="image/png" />
             </Head>
 
             <AnimatePresence mode="wait" initial={false}>
