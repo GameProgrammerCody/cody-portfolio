@@ -7,7 +7,6 @@ export default function ParticleBackground() {
     const [opacity, setOpacity] = useState(1)
     const [isMobile, setIsMobile] = useState(false)
 
-    // Detect mobile or touch
     useEffect(() => {
         const checkMobile = () =>
             setIsMobile(window.innerWidth < 768 || "ontouchstart" in window)
@@ -16,11 +15,9 @@ export default function ParticleBackground() {
         return () => window.removeEventListener("resize", checkMobile)
     }, [])
 
-    // Listen for motion toggle + saved pref
     useEffect(() => {
         const saved = localStorage.getItem("reduceMotion")
         if (saved === "true") setEnabled(false)
-
         const handleToggle = (e) => {
             const newState = e.detail
             setOpacity(0)
@@ -40,11 +37,12 @@ export default function ParticleBackground() {
         if (!ctx) return
 
         const DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
-        let w = 0, h = 0
+        let w = 0,
+            h = 0
 
-        // Mouse parallax
         const target = { x: 0.5, y: 0.5 }
         const mouse = { x: 0.5, y: 0.5 }
+
         const handleMouseMove = (e) => {
             if (isMobile) return
             target.x = e.clientX / window.innerWidth
@@ -52,9 +50,9 @@ export default function ParticleBackground() {
         }
         if (!isMobile) window.addEventListener("mousemove", handleMouseMove)
 
-        // Particle config
         const particleCount = isMobile ? 70 : 160
         const connectionRange = isMobile ? 100 : 130
+
         const particles = Array.from({ length: particleCount }).map(() => {
             const z = Math.random() ** 2
             return {
@@ -67,6 +65,7 @@ export default function ParticleBackground() {
                 a: 0.35 + Math.random() * 0.45 * (0.3 + z),
                 pulse: 0,
                 burst: 0,
+                links: [],
             }
         })
 
@@ -82,11 +81,12 @@ export default function ParticleBackground() {
         resize()
         window.addEventListener("resize", resize)
 
-        // Create a new particle and mark it for burst
+        // addParticleAt: spawns new particle and caches nearest neighbors
         const addParticleAt = (clientX, clientY) => {
             const x = clientX / window.innerWidth
             const y = clientY / window.innerHeight
             const z = Math.random() ** 2
+
             const newParticle = {
                 x,
                 y,
@@ -95,9 +95,22 @@ export default function ParticleBackground() {
                 vy: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
                 r: (0.9 + Math.random() * 1.3) * (0.3 + z),
                 a: 0.8,
-                pulse: 1.0,   // pulse animation
-                burst: 1.0,   // energy burst animation
+                pulse: 1.0,
+                burst: 1.0,
+                links: [],
             }
+
+            // precompute 5 closest indices once (cheap O(n))
+            const tempList = []
+            for (let i = 0; i < particles.length; i++) {
+                const dx = x - particles[i].x
+                const dy = y - particles[i].y
+                const d2 = dx * dx + dy * dy
+                tempList.push({ i, d2 })
+            }
+            tempList.sort((a, b) => a.d2 - b.d2)
+            newParticle.links = tempList.slice(0, 5).map((n) => n.i)
+
             particles.splice(Math.floor(Math.random() * particles.length), 1)
             particles.push(newParticle)
         }
@@ -108,7 +121,6 @@ export default function ParticleBackground() {
         }
         window.addEventListener("click", handleClick)
 
-        // Animation loop
         const loop = () => {
             if (enabled && !isMobile) {
                 mouse.x += (target.x - mouse.x) * 0.05
@@ -116,16 +128,21 @@ export default function ParticleBackground() {
             }
 
             ctx.clearRect(0, 0, w, h)
-            const bg = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h))
+            const bg = ctx.createRadialGradient(
+                w / 2,
+                h / 2,
+                0,
+                w / 2,
+                h / 2,
+                Math.max(w, h)
+            )
             bg.addColorStop(0, "rgba(8,14,24,1)")
             bg.addColorStop(1, "rgba(3,6,12,1)")
             ctx.fillStyle = bg
             ctx.fillRect(0, 0, w, h)
 
-            const time = Date.now() * 0.02
-            const hue = (200 + Math.sin(time / 2000) * 60) % 360
+            const hue = (200 + Math.sin(Date.now() * 0.0005) * 60) % 360
 
-            // Project + animate
             const projected = particles.map((p) => {
                 if (enabled) {
                     p.x += p.vx
@@ -135,7 +152,6 @@ export default function ParticleBackground() {
                 }
                 if (p.pulse > 0) p.pulse -= 0.03
                 if (p.burst > 0) p.burst -= 0.04
-
                 const pulseScale = 1 + p.pulse * 1.8
                 const parallaxX = !isMobile && enabled ? (mouse.x - 0.5) * p.z * 0.12 : 0
                 const parallaxY = !isMobile && enabled ? (mouse.y - 0.5) * p.z * 0.12 : 0
@@ -147,6 +163,7 @@ export default function ParticleBackground() {
                 }
             })
 
+            // draw particles
             ctx.globalCompositeOperation = "source-over"
             projected.forEach((p) => {
                 ctx.beginPath()
@@ -157,10 +174,11 @@ export default function ParticleBackground() {
                 ctx.fill()
             })
 
-            // normal connections
+            // normal network lines
             for (let i = 0; i < projected.length; i++) {
                 for (let j = i + 1; j < projected.length; j++) {
-                    const a = projected[i], b = projected[j]
+                    const a = projected[i],
+                        b = projected[j]
                     const dx = a.px - b.px
                     const dy = a.py - b.py
                     const d2 = dx * dx + dy * dy
@@ -176,35 +194,30 @@ export default function ParticleBackground() {
                 }
             }
 
-            // energy burst connections
-            projected.forEach((p) => {
-                if (p.burst > 0) {
-                    const nearby = projected
-                        .map((b) => {
-                            const dx = p.px - b.px
-                            const dy = p.py - b.py
-                            const d2 = dx * dx + dy * dy
-                            return { b, d2 }
-                        })
-                        .filter(({ d2 }) => d2 > 0 && d2 < connectionRange * connectionRange * 1.5)
-                        .sort((a, b) => a.d2 - b.d2)
-                        .slice(0, 5)
-
-                    ctx.strokeStyle = `hsla(${hue}, 100%, 85%, ${0.5 * p.burst})`
+            // lightweight burst lines using cached links
+            projected.forEach((p, idx) => {
+                if (p.burst > 0 && p.links.length) {
+                    ctx.strokeStyle = `hsla(${(hue + 40) % 360},100%,80%,${0.5 * p.burst})`
                     ctx.lineWidth = 1.5
-                    nearby.forEach(({ b }) => {
+                    p.links.forEach((linkIndex) => {
+                        const b = projected[linkIndex]
+                        if (!b) return
                         ctx.beginPath()
                         ctx.moveTo(p.px, p.py)
-                        ctx.lineTo(b.b.px, b.b.py)
+                        ctx.lineTo(b.px, b.py)
                         ctx.stroke()
                     })
                 }
             })
 
-            // subtle bloom
+            // bloom
             const bloom = ctx.createRadialGradient(
-                w / 2, h / 2, 0,
-                w / 2, h / 2, Math.max(w, h) * 0.8
+                w / 2,
+                h / 2,
+                0,
+                w / 2,
+                h / 2,
+                Math.max(w, h) * 0.8
             )
             bloom.addColorStop(0, "rgba(0,255,255,0.06)")
             bloom.addColorStop(0.5, "rgba(120,120,255,0.05)")
