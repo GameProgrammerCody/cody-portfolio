@@ -32,10 +32,10 @@ export default function Home() {
           </p>
 
           <div className="mt-6 flex justify-center gap-3 flex-wrap">
-            <Link href="/projects" className="btn btn-primary">
+                      <Link href="/projects" scroll={false} className="btn btn-primary">
               View Projects
             </Link>
-            <Link href="/resume" className="btn btn-ghost">
+                      <Link href="/resume" scroll={false} className="btn btn-ghost">
               Download Resume
             </Link>
           </div>

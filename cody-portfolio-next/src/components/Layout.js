@@ -66,7 +66,7 @@ export default function Layout({ children }) {
           {/* Logo / Name */}
           <Link
             href="/"
-            className="font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r 
+                      scroll={false} className="font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r 
                        from-cyan-400 via-blue-300 to-indigo-400 bg-[length:200%_auto]
                        animate-[shimmer_10s_ease-in-out_infinite] transition hover:opacity-90 text-lg sm:text-xl"
           >
@@ -83,7 +83,7 @@ export default function Layout({ children }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-3 py-1 rounded-xl group"
+                    scroll={false} className="relative px-3 py-1 rounded-xl group"
               >
                 <span className="text-white/80 group-hover:text-cyan-300 transition-colors duration-300">
                   {item.label}
@@ -132,7 +132,7 @@ export default function Layout({ children }) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="block text-white/80 hover:text-cyan-300 transition-colors"
+                    scroll={false} className="block text-white/80 hover:text-cyan-300 transition-colors"
               >
                 {item.label}
               </Link>
@@ -183,10 +183,10 @@ export default function Layout({ children }) {
               Explore
               <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent"></span>
             </h4>
-            <Link href="/" className="text-white/60 hover:text-cyan-300 transition-colors">Home</Link>
-            <Link href="/projects" className="text-white/60 hover:text-cyan-300 transition-colors">Projects</Link>
-            <Link href="/about" className="text-white/60 hover:text-cyan-300 transition-colors">About</Link>
-            <Link href="/resume" className="text-white/60 hover:text-cyan-300 transition-colors">Resume</Link>
+                      <Link href="/" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">Home</Link>
+                      <Link href="/projects" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">Projects</Link>
+                      <Link href="/about" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">About</Link>
+                      <Link href="/resume" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">Resume</Link>
           </div>
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">

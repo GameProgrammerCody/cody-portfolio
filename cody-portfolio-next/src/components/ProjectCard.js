@@ -4,7 +4,7 @@ import SmartImage from './SmartImage'
 export default function ProjectCard({ project: p }) {
     return (
         <Link
-            href={`/projects/${p.slug}`}
+            href={`/projects/${p.slug}`} scroll={false}
             className="group block rounded-2xl border border-white/10 bg-black/30 overflow-hidden flex flex-col
                  transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(0,255,255,0.25)]
                  hover:border-cyan-400/40 hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
