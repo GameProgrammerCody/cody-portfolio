@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-import SmartLink from '../src/components/SmartLink'
+import SmartLink from '../../src/components/SmartLink'
 import data from '../../src/data/projects.json'
 import SmartImage from '../../src/components/SmartImage'
 
