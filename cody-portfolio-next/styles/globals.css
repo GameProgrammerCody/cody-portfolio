@@ -1,24 +1,19 @@
-/* --- Import fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* --- Global text defaults --- */
 html, body {
-  font-family: 'Inter', system-ui, sans-serif;
-  @apply bg-[#050a12] text-white leading-relaxed tracking-[0.01em];
+    font-family: var(--font-inter), system-ui, sans-serif;
+    @apply bg-[#050a12] text-white leading-relaxed tracking-[0.01em];
 }
 
-/* --- Headers, logo & UI elements --- */
 h1, h2, h3, h4, h5, h6,
 .header-logo,
 .btn,
 .nav-link {
-  font-family: 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.04em;
-  @apply font-semibold;
+    font-family: var(--font-orbitron), system-ui, sans-serif;
+    letter-spacing: 0.04em;
+    @apply font-semibold;
 }
 
 /* --- Headline gradient styling --- */
