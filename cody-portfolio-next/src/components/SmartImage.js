@@ -7,19 +7,16 @@ export default function SmartImage({ slug, base = "hero", className = "", alt = 
     const [loaded, setLoaded] = useState(false);
     const [isHero, setIsHero] = useState(false);
 
-    // Determine if we’re on a project detail page (client-only)
     useEffect(() => {
         setIsHero(base === "hero" && router.pathname.includes("/projects/"));
     }, [router.pathname, base]);
 
     const prefix = `/assets/${slug}/${base}`;
 
-    // Responsive sizing rules
     const responsiveSizes = isHero
         ? "(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
         : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 400px";
 
-    // Build srcset for generated variants (@600, @1200, full)
     const buildSrcSet = (format) =>
         isHero
             ? [
@@ -27,27 +24,26 @@ export default function SmartImage({ slug, base = "hero", className = "", alt = 
                 `${prefix}@1200.${format} 1200w`,
                 `${prefix}.${format} 1600w`,
             ].join(", ")
-            : [
-                `${prefix}@600.${format} 600w`,
-                `${prefix}.${format} 800w`,
-            ].join(", ");
+            : [`${prefix}@600.${format} 600w`, `${prefix}.${format} 800w`].join(", ");
+
+    // 🔑 choose fit: hero = cover, title = contain
+    const fitClass = base === "title" ? "object-contain" : "object-cover";
 
     return (
-        <div className={`relative w-full h-full overflow-hidden ${className}`}>
-            <picture>
+        <div className={`relative overflow-hidden ${className}`}>
+            <picture className="absolute inset-0 block">
                 <source type="image/avif" srcSet={buildSrcSet("avif")} sizes={responsiveSizes} />
                 <source type="image/webp" srcSet={buildSrcSet("webp")} sizes={responsiveSizes} />
                 <Image
-                    src={`${prefix}.jpg`}                  // fallback format
+                    src={`${prefix}.jpg`}
                     alt={alt || slug}
                     fill
                     sizes={responsiveSizes}
-                    priority={isHero}                      // preload if LCP
-                    loading={isHero ? "eager" : "lazy"}    // eager for LCP only
-                    fetchPriority={isHero ? "high" : "auto"} // <-- LCP boost
+                    priority={isHero}
+                    loading={isHero ? "eager" : "lazy"}
+                    fetchPriority={isHero ? "high" : "auto"}
                     decoding="async"
-                    className={`object-cover transition-opacity duration-700 ease-out ${loaded ? "opacity-100" : "opacity-0"
-                        }`}
+                    className={`${fitClass} transition-opacity duration-700 ease-out ${loaded ? "opacity-100" : "opacity-0"}`}
                     onLoad={() => setLoaded(true)}
                 />
             </picture>
