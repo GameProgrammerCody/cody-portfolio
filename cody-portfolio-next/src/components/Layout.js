@@ -1,28 +1,6 @@
-import SmartLink from './SmartLink'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import ParticleBackground from './ParticleBackground'
-import { Inter, Orbitron } from 'next/font/google'
-
-const inter = Inter({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-inter',
-})
-
-const orbitron = Orbitron({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-orbitron',
-})
-
-export default function MyApp({ Component, pageProps }) {
-    return (
-        <main className={`${inter.variable} ${orbitron.variable}`}>
-            <Component {...pageProps} />
-        </main>
-    )
-}
 
 // Inject shimmer animation if not present
 if (typeof window !== "undefined" && !document.getElementById("shimmer-anim")) {
@@ -86,14 +64,14 @@ export default function Layout({ children }) {
       >
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           {/* Logo / Name */}
-          <SmartLink
+          <Link
             href="/"
                       scroll={false} className="font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r 
                        from-cyan-400 via-blue-300 to-indigo-400 bg-[length:200%_auto]
                        animate-[shimmer_10s_ease-in-out_infinite] transition hover:opacity-90 text-lg sm:text-xl"
           >
             CODY WAY
-          </SmartLink>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex gap-4 text-sm items-center">
@@ -102,7 +80,7 @@ export default function Layout({ children }) {
               { href: '/about', label: 'About' },
               { href: '/resume', label: 'Resume' },
             ].map((item) => (
-                <SmartLink
+              <Link
                 key={item.href}
                 href={item.href}
                     scroll={false} className="relative px-3 py-1 rounded-xl group"
@@ -111,7 +89,7 @@ export default function Layout({ children }) {
                   {item.label}
                 </span>
                 <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 group-hover:w-full"></span>
-              </SmartLink>
+              </Link>
             ))}
 
             <a
