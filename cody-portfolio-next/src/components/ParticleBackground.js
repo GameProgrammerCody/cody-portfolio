@@ -42,7 +42,7 @@ export default function ParticleBackground() {
         const DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
         let w = 0, h = 0
 
-        // Mouse parallax only for desktop
+        // Mouse parallax
         const target = { x: 0.5, y: 0.5 }
         const mouse = { x: 0.5, y: 0.5 }
         const handleMouseMove = (e) => {
@@ -52,11 +52,9 @@ export default function ParticleBackground() {
         }
         if (!isMobile) window.addEventListener("mousemove", handleMouseMove)
 
-        // Particle density adjustment
+        // Particle config
         const particleCount = isMobile ? 70 : 160
         const connectionRange = isMobile ? 100 : 130
-
-        // Particles
         const particles = Array.from({ length: particleCount }).map(() => {
             const z = Math.random() ** 2
             return {
@@ -67,10 +65,11 @@ export default function ParticleBackground() {
                 vy: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
                 r: (0.9 + Math.random() * 1.3) * (0.3 + z),
                 a: 0.35 + Math.random() * 0.45 * (0.3 + z),
+                pulse: 0,
+                burst: 0,
             }
         })
 
-        // Resize handler
         const resize = () => {
             w = window.innerWidth
             h = window.innerHeight
@@ -83,7 +82,7 @@ export default function ParticleBackground() {
         resize()
         window.addEventListener("resize", resize)
 
-        // Add a new particle at click position, remove one random old particle
+        // Create a new particle and mark it for burst
         const addParticleAt = (clientX, clientY) => {
             const x = clientX / window.innerWidth
             const y = clientY / window.innerHeight
@@ -94,10 +93,11 @@ export default function ParticleBackground() {
                 z,
                 vx: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
                 vy: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
-                r: (0.9 + Math.random() * 1.3) * (0.3 + z) * 1.6, // slightly bigger / brighter
-                a: 0.8, // brighter alpha to highlight spawn
+                r: (0.9 + Math.random() * 1.3) * (0.3 + z),
+                a: 0.8,
+                pulse: 1.0,   // pulse animation
+                burst: 1.0,   // energy burst animation
             }
-            // remove random old one and insert new one
             particles.splice(Math.floor(Math.random() * particles.length), 1)
             particles.push(newParticle)
         }
@@ -106,7 +106,7 @@ export default function ParticleBackground() {
             if (isMobile) return
             addParticleAt(e.clientX, e.clientY)
         }
-        canvas.addEventListener("click", handleClick)
+        window.addEventListener("click", handleClick)
 
         // Animation loop
         const loop = () => {
@@ -125,6 +125,7 @@ export default function ParticleBackground() {
             const time = Date.now() * 0.02
             const hue = (200 + Math.sin(time / 2000) * 60) % 360
 
+            // Project + animate
             const projected = particles.map((p) => {
                 if (enabled) {
                     p.x += p.vx
@@ -132,21 +133,31 @@ export default function ParticleBackground() {
                     if (p.x < 0 || p.x > 1) p.vx *= -1
                     if (p.y < 0 || p.y > 1) p.vy *= -1
                 }
+                if (p.pulse > 0) p.pulse -= 0.03
+                if (p.burst > 0) p.burst -= 0.04
+
+                const pulseScale = 1 + p.pulse * 1.8
                 const parallaxX = !isMobile && enabled ? (mouse.x - 0.5) * p.z * 0.12 : 0
                 const parallaxY = !isMobile && enabled ? (mouse.y - 0.5) * p.z * 0.12 : 0
-                return { ...p, px: (p.x + parallaxX) * w, py: (p.y + parallaxY) * h }
+                return {
+                    ...p,
+                    px: (p.x + parallaxX) * w,
+                    py: (p.y + parallaxY) * h,
+                    pr: p.r * pulseScale,
+                }
             })
 
             ctx.globalCompositeOperation = "source-over"
             projected.forEach((p) => {
                 ctx.beginPath()
-                ctx.arc(p.px, p.py, p.r, 0, Math.PI * 2)
+                ctx.arc(p.px, p.py, p.pr, 0, Math.PI * 2)
                 const L = 72 + p.z * 18
                 const A = Math.min(1, 0.75 * p.a + 0.25)
                 ctx.fillStyle = `hsla(${hue}, 100%, ${L}%, ${A})`
                 ctx.fill()
             })
 
+            // normal connections
             for (let i = 0; i < projected.length; i++) {
                 for (let j = i + 1; j < projected.length; j++) {
                     const a = projected[i], b = projected[j]
@@ -165,6 +176,32 @@ export default function ParticleBackground() {
                 }
             }
 
+            // energy burst connections
+            projected.forEach((p) => {
+                if (p.burst > 0) {
+                    const nearby = projected
+                        .map((b) => {
+                            const dx = p.px - b.px
+                            const dy = p.py - b.py
+                            const d2 = dx * dx + dy * dy
+                            return { b, d2 }
+                        })
+                        .filter(({ d2 }) => d2 > 0 && d2 < connectionRange * connectionRange * 1.5)
+                        .sort((a, b) => a.d2 - b.d2)
+                        .slice(0, 5)
+
+                    ctx.strokeStyle = `hsla(${hue}, 100%, 85%, ${0.5 * p.burst})`
+                    ctx.lineWidth = 1.5
+                    nearby.forEach(({ b }) => {
+                        ctx.beginPath()
+                        ctx.moveTo(p.px, p.py)
+                        ctx.lineTo(b.b.px, b.b.py)
+                        ctx.stroke()
+                    })
+                }
+            })
+
+            // subtle bloom
             const bloom = ctx.createRadialGradient(
                 w / 2, h / 2, 0,
                 w / 2, h / 2, Math.max(w, h) * 0.8
@@ -182,13 +219,12 @@ export default function ParticleBackground() {
 
         loop()
 
-        // Cleanup
         return () => {
             cancelAnimationFrame(rafRef.current)
             window.removeEventListener("resize", resize)
             if (!isMobile) {
                 window.removeEventListener("mousemove", handleMouseMove)
-                canvas.removeEventListener("click", handleClick)
+                window.removeEventListener("click", handleClick)
             }
         }
     }, [enabled, isMobile])
@@ -197,7 +233,7 @@ export default function ParticleBackground() {
         <canvas
             ref={canvasRef}
             className="fixed inset-0 z-0 w-full h-full transition-opacity duration-700 ease-in-out"
-            style={{ opacity }}
+            style={{ opacity, pointerEvents: "none" }}
         />
     )
 }
