@@ -8,7 +8,6 @@ export default function ParticleBackground() {
     const [opacity, setOpacity] = useState(1)
     const [isMobile, setIsMobile] = useState(false)
 
-    // ---- Detect device type ----
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768 || "ontouchstart" in window)
         checkMobile()
@@ -16,7 +15,6 @@ export default function ParticleBackground() {
         return () => window.removeEventListener("resize", checkMobile)
     }, [])
 
-    // ---- Handle motion toggle (reduce motion accessibility) ----
     useEffect(() => {
         const saved = localStorage.getItem("reduceMotion")
         if (saved === "true") setEnabled(false)
@@ -38,7 +36,7 @@ export default function ParticleBackground() {
         const ctx = canvas.getContext("2d")
         if (!ctx) return
 
-        // ---- DPR / canvas scaling ----
+        // ---- DPR / size ----
         const DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
         let w = 0, h = 0
         const resize = () => {
@@ -53,7 +51,7 @@ export default function ParticleBackground() {
         resize()
         window.addEventListener("resize", resize)
 
-        // ---- Mouse / parallax setup ----
+        // ---- Parallax ----
         const target = { x: 0.5, y: 0.5 }
         const mouse = { x: 0.5, y: 0.5 }
         const handleMouseMove = (e) => {
@@ -63,8 +61,10 @@ export default function ParticleBackground() {
         }
         if (!isMobile) window.addEventListener("mousemove", handleMouseMove)
 
-        // ---- Particle generator helper ----
-        function spawnParticle() {
+        // ---- Particles ----
+        const particleCount = isMobile ? 70 : 160
+        const connectionRange = isMobile ? 100 : 130
+        const particles = Array.from({ length: particleCount }).map(() => {
             const z = Math.random() ** 2
             return {
                 x: Math.random(),
@@ -78,14 +78,9 @@ export default function ParticleBackground() {
                 burst: 0,
                 links: [],
             }
-        }
+        })
 
-        // ---- Particle setup ----
-        const particleCount = isMobile ? 70 : 160
-        const connectionRange = isMobile ? 100 : 130
-        const particles = Array.from({ length: particleCount }, spawnParticle)
-
-        // ---- Click to add particle (remove one elsewhere) ----
+        // ---- Click to add particle (and remove one elsewhere) ----
         const addParticleAt = (clientX, clientY) => {
             const x = clientX / window.innerWidth
             const y = clientY / window.innerHeight
@@ -100,7 +95,6 @@ export default function ParticleBackground() {
                 burst: 1.0,
                 links: [],
             }
-
             const tempList = []
             for (let i = 0; i < particles.length; i++) {
                 const dx = x - particles[i].x
@@ -110,17 +104,16 @@ export default function ParticleBackground() {
             tempList.sort((a, b) => a.d2 - b.d2)
             newParticle.links = tempList.slice(0, 5).map(n => n.i)
 
-            // replace a random old particle
             particles.splice(Math.floor(Math.random() * particles.length), 1)
             particles.push(newParticle)
         }
         const handleClick = (e) => { if (!isMobile) addParticleAt(e.clientX, e.clientY) }
         window.addEventListener("click", handleClick)
 
-        // ---- Create Rift Wraith (portal + creature AI) ----
-        const rift = createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, spawnParticle)
+        // ---- create Rift Wraith module ----
+        const rift = createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile)
 
-        // ---- Main render loop ----
+        // ---- Main loop ----
         const loop = () => {
             if (enabled && !isMobile) {
                 mouse.x += (target.x - mouse.x) * 0.05
@@ -129,7 +122,7 @@ export default function ParticleBackground() {
 
             ctx.clearRect(0, 0, w, h)
 
-            // ---- Background gradient ----
+            // background
             const bg = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h))
             bg.addColorStop(0, "rgba(8,14,24,1)")
             bg.addColorStop(1, "rgba(3,6,12,1)")
@@ -138,7 +131,7 @@ export default function ParticleBackground() {
 
             const hue = (200 + Math.sin(Date.now() * 0.0005) * 60) % 360
 
-            // ---- Update + project particles ----
+            // update + project particles
             const projected = particles.map((p) => {
                 if (enabled) {
                     p.x += p.vx
@@ -159,7 +152,7 @@ export default function ParticleBackground() {
                 }
             })
 
-            // ---- Draw particles ----
+            // draw particles
             ctx.globalCompositeOperation = "source-over"
             projected.forEach((p) => {
                 ctx.beginPath()
@@ -170,7 +163,30 @@ export default function ParticleBackground() {
                 ctx.fill()
             })
 
-            // ---- Connection lines ----
+            // ---- Particle respawn logic ----
+            const desiredCount = isMobile ? 70 : 160;
+            if (particles.length < desiredCount) {
+                // spawn a few new ones per frame until full
+                const toSpawn = Math.min(3, desiredCount - particles.length);
+                for (let i = 0; i < toSpawn; i++) {
+                    const z = Math.random() ** 2;
+                    particles.push({
+                        x: Math.random(),
+                        y: Math.random(),
+                        z,
+                        vx: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
+                        vy: (Math.random() - 0.5) * 0.00035 * (0.5 + z),
+                        r: (0.9 + Math.random() * 1.3) * (0.3 + z),
+                        a: 0.35 + Math.random() * 0.45 * (0.3 + z),
+                        pulse: 0,
+                        burst: 0,
+                        links: [],
+                    });
+                }
+            }
+
+
+            // network lines
             for (let i = 0; i < projected.length; i++) {
                 for (let j = i + 1; j < projected.length; j++) {
                     const a = projected[i], b = projected[j]
@@ -189,7 +205,7 @@ export default function ParticleBackground() {
                 }
             }
 
-            // ---- Burst lines (on recent additions) ----
+            // burst lines
             projected.forEach((p) => {
                 if (p.burst > 0 && p.links.length) {
                     ctx.strokeStyle = `hsla(${(hue + 40) % 360},100%,80%,${0.5 * p.burst})`
@@ -205,10 +221,10 @@ export default function ParticleBackground() {
                 }
             })
 
-            // ---- Draw creature & portal system ----
+            // ---- draw the Rift Wraith (portal + creature) ----
             rift.updateAndDraw(hue, w, h)
 
-            // ---- Subtle bloom overlay ----
+            // ---- Bloom pass ----
             const bloom = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.8)
             bloom.addColorStop(0, "rgba(0,255,255,0.06)")
             bloom.addColorStop(0.5, "rgba(120,120,255,0.05)")
@@ -223,7 +239,6 @@ export default function ParticleBackground() {
 
         loop()
 
-        // ---- Cleanup ----
         return () => {
             cancelAnimationFrame(rafRef.current)
             window.removeEventListener("resize", resize)

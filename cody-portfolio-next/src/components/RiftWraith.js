@@ -1,9 +1,8 @@
 // src/components/RiftWraith.js
 // Handles the Rift Wraith creature logic, portal effects, idle detection, and drawing.
 // Includes visual level-up effects (pulse, radial flash, and sparks).
-// Now uses spawnParticle() callback from ParticleBackground to respawn eaten particles.
 
-export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, spawnParticle) {
+export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     // -------------------------------
     //  SPRITE SETUP
     // -------------------------------
@@ -76,13 +75,14 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
     const trail = [];
     const maxTrail = 28;
 
-    // Transient visual effects
+    // Transient effect arrays
     const levelUpBursts = []; // bright radial flashes
     const sparks = [];        // flying spark particles
 
     // -------------------------------
     //  FINITE STATE MACHINE
     // -------------------------------
+    // idle → spawn_open → spawn_creature → roaming → exit_open → exit_fade → idle
     let state = "idle";
     let spawnTimer = 0;
     const idleMs = 60000;
@@ -104,7 +104,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
         portal.closing = true;
     };
 
-    // ---- Creature spawning / exit ----
+    // ---- Creature spawning and exit ----
     const beginSpawn = () => {
         const x = 0.15 + Math.random() * 0.7;
         const y = 0.2 + Math.random() * 0.6;
@@ -229,7 +229,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                 }
             }
 
-            // update pulse / burst / spark effects
+            // update pulse + fade effects
             if (creature.pulse > 0) creature.pulse -= 0.04;
             levelUpBursts.forEach((b) => (b.life -= 0.05));
             for (let i = levelUpBursts.length - 1; i >= 0; i--)
@@ -238,7 +238,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
             for (let i = sparks.length - 1; i >= 0; i--)
                 if (sparks[i].life <= 0) sparks.splice(i, 1);
 
-            // seek + eat
+            // movement + eating
             if (!creature.exiting && particles.length > 0) {
                 if (now > creature.nextSeekAt) {
                     let best = -1, bestD2 = 1e9;
@@ -260,35 +260,31 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                         creature.x += (dx / len) * step;
                         creature.y += (dy / len) * step;
 
-                        // trail path
+                        // trail
                         trail.push({ x: prevX, y: prevY, life: 1.0 });
                         if (trail.length > maxTrail) trail.shift();
 
-                        // ---- Eat particle ----
+                        // eat particle
                         if (len < creature.eatRadius) {
                             particles.splice(best, 1);
-                            // respawn new particle immediately to keep density stable
-                            if (typeof spawnParticle === "function") particles.push(spawnParticle());
-
                             const previousTier = creature.tier;
                             creature.size = Math.min(creature.maxSize, creature.size + creature.growthPerEat);
 
-                            // size thresholds for visual evolution
+                            // tier progression thresholds
                             const thresholds = [36, 52, 70, 92, 118];
                             let tier = 0;
-                            for (let i = 0; i < thresholds.length; i++)
-                                if (creature.size >= thresholds[i]) tier = i + 1;
+                            for (let i = 0; i < thresholds.length; i++) if (creature.size >= thresholds[i]) tier = i + 1;
                             creature.tier = Math.min(tier, images.creature.length - 1);
 
-                            // ---- Level-up visual burst ----
+                            // LEVEL-UP FLASH + SPARKS
                             if (creature.tier > previousTier) {
                                 creature.pulse = 1.0;
                                 const bx = creature.x * W, by = creature.y * H;
 
-                                // main radial burst
+                                // bright radial burst
                                 levelUpBursts.push({ x: bx, y: by, r: 0, life: 1 });
 
-                                // spark explosion
+                                // spark burst
                                 for (let i = 0; i < 16; i++) {
                                     const a = Math.random() * Math.PI * 2;
                                     const s = 2 + Math.random() * 3;
@@ -306,7 +302,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                 }
             }
 
-            // ---- Trail drawing ----
+            // ---- Draw trail ----
             if (trail.length) {
                 ctx.save();
                 ctx.globalCompositeOperation = "lighter";
@@ -326,7 +322,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                 ctx.restore();
             }
 
-            // ---- Level-up burst and sparks ----
+            // ---- Draw level-up flash + sparks ----
             if (levelUpBursts.length) {
                 ctx.save();
                 ctx.globalCompositeOperation = "lighter";
@@ -360,10 +356,11 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                 ctx.restore();
             }
 
-            // ---- Creature drawing ----
+            // ---- Draw creature ----
             ctx.save();
             ctx.globalCompositeOperation = "lighter";
             ctx.globalAlpha = 0.9 * creature.opacity;
+
             const img = images.creature[Math.min(creature.tier, images.creature.length - 1)];
             const s = creature.size;
             const dx = creature.x * W, dy = creature.y * H;
@@ -383,10 +380,11 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, s
                 ctx.arc(0, 0, s, 0, Math.PI * 2);
                 ctx.fill();
             }
+
             ctx.restore();
         }
     }
 
-    // Return API used by ParticleBackground
+    // Expose methods for background file
     return { updateAndDraw, resetIdle, cancelers };
 }
