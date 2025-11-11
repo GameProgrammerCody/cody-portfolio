@@ -61,7 +61,7 @@ export default function About() {
                 <strong>AI-driven design</strong>, focusing on code that feels both elegant and performant.
               </p>
               <p className="text-white/80 mb-3">
-                I enjoy the challenge of turning creative ideas into interactive mechanics — whether it’s refining combat flow, crafting AI behaviors, or creating the internal tools that empower teams to work faster and smarter.
+                I enjoy the challenge of turning creative ideas into interactive mechanics, whether it’s refining combat flow, crafting AI behaviors, or creating the internal tools that empower teams to work faster and smarter.
               </p>
               <p className="text-white/80">
                 <strong>BSc (Hons) Games Programming</strong> — Bournemouth University
