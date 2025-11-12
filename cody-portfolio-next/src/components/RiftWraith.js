@@ -37,7 +37,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         y: 0.5,
         size: 28,
         maxSize: 120,
-        growthPerEat: 6,
+        growthPerEat: 1,
         tier: 0,
         opacity: 0,
         speed: 0.0035,
@@ -60,6 +60,10 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     // ---- trail
     const trail = [];
     const maxTrail = 28;
+
+    // Transient effect arrays
+    const levelUpBursts = []; // bright radial flashes
+    const sparks = [];        // flying spark particles
 
     // ---- FSM
     // idle → spawn_open → spawn_creature → roaming → exit_open → exit_fade → idle
@@ -173,19 +177,16 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         // FSM transitions (time-based)
         const now = performance.now();
         if (state === "spawn_open") {
-            // after 400ms of opening, spawn creature then close portal after 1.2s
             if (now - spawnTimer > 400 && !creature.active) {
                 spawnCreature(portal.x, portal.y);
                 setTimeout(() => closePortal(), 1200);
                 state = "spawn_creature";
             }
         } else if (state === "exit_open") {
-            // when portal is fully open, start fading creature into it
             if (!portal.opening && portal.active && !portal.closing) {
                 state = "exit_fade";
             }
         } else if (state === "exit_fade") {
-            // once creature is fully faded, close portal and go idle
             if (!creature.active) {
                 closePortal();
                 state = "idle";
@@ -203,7 +204,6 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 if (creature.opacity <= 0) {
                     creature.active = false;
                     creature.exiting = false;
-                    // trail cleared on exit
                     trail.length = 0;
                 }
             }
@@ -236,12 +236,33 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                         // eat
                         if (len < creature.eatRadius) {
                             particles.splice(best, 1);
+                            const previousTier = creature.tier;
                             creature.size = Math.min(creature.maxSize, creature.size + creature.growthPerEat);
-                            // pick tier from size (supports up to 6)
                             const thresholds = [34, 48, 62, 78, 96];
                             let tier = 0;
                             for (let i = 0; i < thresholds.length; i++) if (creature.size >= thresholds[i]) tier = i + 1;
                             creature.tier = Math.min(tier, images.creature.length - 1);
+
+                            // LEVEL-UP FLASH + SPARKS
+                            if (creature.tier > previousTier) {
+                                const bx = creature.x * W, by = creature.y * H;
+
+                                // bright radial burst
+                                levelUpBursts.push({ x: bx, y: by, r: 0, life: 1 });
+
+                                // spark burst
+                                for (let i = 0; i < 16; i++) {
+                                    const a = Math.random() * Math.PI * 2;
+                                    const s = 2 + Math.random() * 3;
+                                    sparks.push({
+                                        x: bx,
+                                        y: by,
+                                        vx: Math.cos(a) * s,
+                                        vy: Math.sin(a) * s,
+                                        life: 1,
+                                    });
+                                }
+                            }
                         }
                     }
                 }
@@ -266,6 +287,53 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 }
                 ctx.restore();
             }
+
+            // LEVEL-UP BURSTS
+            if (levelUpBursts.length) {
+                ctx.save();
+                ctx.globalCompositeOperation = "lighter";
+                for (let i = levelUpBursts.length - 1; i >= 0; i--) {
+                    const b = levelUpBursts[i];
+                    b.r += 18;
+                    b.life -= 0.05;
+                    if (b.life <= 0) {
+                        levelUpBursts.splice(i, 1);
+                        continue;
+                    }
+                    const alpha = 0.35 * b.life;
+                    const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+                    grad.addColorStop(0, `rgba(120,255,255,${alpha})`);
+                    grad.addColorStop(1, "rgba(0,0,0,0)");
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            // SPARKS
+            if (sparks.length) {
+                ctx.save();
+                ctx.globalCompositeOperation = "lighter";
+                for (let i = sparks.length - 1; i >= 0; i--) {
+                    const s = sparks[i];
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    s.life -= 0.03;
+                    if (s.life <= 0) {
+                        sparks.splice(i, 1);
+                        continue;
+                    }
+                    ctx.globalAlpha = s.life;
+                    ctx.fillStyle = "rgba(180,255,255,0.8)";
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+            ctx.globalAlpha = 1;
 
             // draw creature
             ctx.save();
