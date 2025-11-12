@@ -111,9 +111,8 @@ export default function ParticleBackground() {
         const handleClick = (e) => { if (!isMobile) addParticleAt(e.clientX, e.clientY) }
         window.addEventListener("click", handleClick)
 
-        // --- RiftWraith ---
-        const rift = createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile)
-        // Immediately arm idle timer
+        // --- RiftWraith (pass mouse) ---
+        const rift = createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile, mouse)
         if (rift.resetIdle) rift.resetIdle()
 
         // --- main loop ---
@@ -164,7 +163,7 @@ export default function ParticleBackground() {
                 ctx.fill()
             })
 
-            // respawn
+            // ✅ respawn particles if some were eaten
             const desiredCount = isMobile ? 70 : 160
             if (particles.length < desiredCount) {
                 const toSpawn = Math.min(3, desiredCount - particles.length)
@@ -204,6 +203,7 @@ export default function ParticleBackground() {
                 }
             }
 
+            // burst links
             projected.forEach((p) => {
                 if (p.burst > 0 && p.links.length) {
                     ctx.strokeStyle = `hsla(${(hue + 40) % 360},100%,80%,${0.5 * p.burst})`
@@ -237,7 +237,6 @@ export default function ParticleBackground() {
 
         loop()
 
-        // cleanup
         return () => {
             cancelAnimationFrame(rafRef.current)
             window.removeEventListener("resize", resize)
@@ -251,12 +250,11 @@ export default function ParticleBackground() {
     }, [enabled, isMobile])
 
     return (
-            <canvas
+        <canvas
             ref= { canvasRef }
-        className = "fixed inset-0 z-0 w-full h-full transition-opacity duration-700 ease-in-out"
-        style = {{ opacity, pointerEvents: "none" }
-    }
+    className = "fixed inset-0 z-0 w-full h-full transition-opacity duration-700 ease-in-out"
+    style = {{ opacity, pointerEvents: "none" }
+}
         />
     )
 }
-
