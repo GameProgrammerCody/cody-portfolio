@@ -6,7 +6,7 @@
       "order": 1,
       "category": "Personal",
       "featured": true,
-      "blurb": "A 3D survival game with a magical theme, built for Android and iOS using Unity and C#. Players gather resources, craft equipment, and battle enemies in a dynamic world.",
+      "blurb": "A 3D survival game, built for mobile using Unity and C#. Players gather resources, craft, and battle enemies in a dynamic world.",
       "tags": ["Unity", "C#", "Mobile"],
       "platforms": ["Android", "iOS"],
       "links": {

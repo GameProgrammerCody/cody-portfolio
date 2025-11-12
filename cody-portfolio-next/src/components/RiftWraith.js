@@ -5,14 +5,14 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
             "/assets/creature/creature_1.png",
             "/assets/creature/creature_2.png",
             "/assets/creature/creature_3.png",
-            "/assets/creature/creature_4.png", // safe if missing
+            "/assets/creature/creature_4.png",
             "/assets/creature/creature_5.png",
             "/assets/creature/creature_6.png",
         ],
         portal: "/assets/creature/portal.png",
     };
 
-    // ---- preload
+    // ---- preload ----
     const images = { creature: [], portal: null };
     let assetsReady = false;
     const loadImage = (src) =>
@@ -29,44 +29,43 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         assetsReady = true;
     });
 
-    // ---- creature
+    // ---- creature ----
     const creature = {
         active: false,
         exiting: false,
         x: 0.5,
         y: 0.5,
-        size: 28,
-        maxSize: 120,
-        growthPerEat: 1,
+        size: 5,
+        maxSize: 50,
+        growthPerEat: 0.33,
         tier: 0,
         opacity: 0,
-        speed: 0.0035,
-        eatRadius: 0.02,
+        speed: 0.0025,
         nextSeekAt: 0,
+        nextTargetSwitch: 0,
+        angle: 0,
+        target: null,
     };
 
-    // ---- portal
+    // ---- portal ----
     const portal = {
         active: false,
         x: 0.5,
         y: 0.5,
-        r: 82,
+        r: 10,
+        targetR: 40,
         rot: 0,
         opacity: 0,
         opening: false,
         closing: false,
     };
 
-    // ---- trail
     const trail = [];
     const maxTrail = 28;
+    const levelUpBursts = [];
+    const sparks = [];
 
-    // Transient effect arrays
-    const levelUpBursts = []; // bright radial flashes
-    const sparks = [];        // flying spark particles
-
-    // ---- FSM
-    // idle → spawn_open → spawn_creature → roaming → exit_open → exit_fade → idle
+    // ---- FSM ----
     let state = "idle";
     let spawnTimer = 0;
     const idleMs = 60000;
@@ -74,12 +73,20 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     let cooldown = false;
 
     const openPortalAt = (x, y) => {
+        const baseRadius = 16;
+        const sizeFactor = creature.size / creature.maxSize || 0.1;
+        const targetSize = (baseRadius + sizeFactor * 24) * 0.8;
+
         portal.active = true;
         portal.opening = true;
         portal.closing = false;
         portal.opacity = 0;
-        portal.x = x; portal.y = y;
+        portal.r = 8;
+        portal.targetR = targetSize;
+        portal.x = x;
+        portal.y = y;
     };
+
     const closePortal = () => {
         portal.opening = false;
         portal.closing = true;
@@ -96,10 +103,13 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     const spawnCreature = (x, y) => {
         creature.active = true;
         creature.exiting = false;
-        creature.x = x; creature.y = y;
-        creature.size = 28;
+        creature.x = x;
+        creature.y = y;
+        creature.size = 5;
         creature.tier = 0;
         creature.opacity = 0;
+        creature.angle = Math.random() * Math.PI * 2;
+        creature.target = null;
         trail.length = 0;
     };
 
@@ -110,17 +120,12 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
         state = "exit_open";
     };
 
-    // ---- idle reset (user activity)
     const resetIdle = () => {
         if (idleTimeout) clearTimeout(idleTimeout);
-
-        // If creature is around (roaming or finishing spawn), start exit flow.
         if (state === "roaming" || state === "spawn_creature") {
             startExit();
             return;
         }
-
-        // Arm spawn timer only from steady idle (and not during cooldown)
         if (!cooldown && enabled && !isMobile) {
             idleTimeout = setTimeout(() => {
                 cooldown = true;
@@ -134,12 +139,16 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
     cancelers.forEach((evt) => window.addEventListener(evt, resetIdle));
     resetIdle();
 
-    // ---- update/draw
+    // ---- main update/draw ----
     function updateAndDraw(hue, W, H) {
         if (!assetsReady) return;
 
         // PORTAL ANIM
         if (portal.active) {
+            const sizeFactor = creature.active ? creature.size / creature.maxSize : 0.1;
+            portal.targetR = (16 + sizeFactor * 24) * 0.8;
+            portal.r += (portal.targetR - portal.r) * 0.1;
+
             if (portal.opening) {
                 portal.opacity = Math.min(1, portal.opacity + 0.05);
                 if (portal.opacity >= 1) portal.opening = false;
@@ -150,21 +159,21 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                     portal.closing = false;
                 }
             }
+
             portal.rot += 0.01;
 
-            // draw portal
             ctx.save();
             ctx.globalCompositeOperation = "lighter";
             ctx.translate(portal.x * W, portal.y * H);
             ctx.rotate(portal.rot);
             const pr = portal.r;
             if (images.portal && images.portal.complete) {
-                ctx.globalAlpha = 0.6 * portal.opacity;
+                ctx.globalAlpha = 0.28 * portal.opacity;
                 ctx.drawImage(images.portal, -pr, -pr, pr * 2, pr * 2);
             } else {
                 const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, pr);
-                grad.addColorStop(0, `rgba(0,255,255,${0.25 * portal.opacity})`);
-                grad.addColorStop(0.7, `rgba(120,120,255,${0.18 * portal.opacity})`);
+                grad.addColorStop(0, `rgba(0,255,255,${0.1 * portal.opacity})`);
+                grad.addColorStop(0.7, `rgba(120,120,255,${0.07 * portal.opacity})`);
                 grad.addColorStop(1, `rgba(0,0,0,0)`);
                 ctx.fillStyle = grad;
                 ctx.beginPath();
@@ -174,7 +183,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
             ctx.restore();
         }
 
-        // FSM transitions (time-based)
+        // FSM transitions
         const now = performance.now();
         if (state === "spawn_open") {
             if (now - spawnTimer > 400 && !creature.active) {
@@ -183,9 +192,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 state = "spawn_creature";
             }
         } else if (state === "exit_open") {
-            if (!portal.opening && portal.active && !portal.closing) {
-                state = "exit_fade";
-            }
+            if (!portal.opening && portal.active && !portal.closing) state = "exit_fade";
         } else if (state === "exit_fade") {
             if (!creature.active) {
                 closePortal();
@@ -196,7 +203,6 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
 
         // CREATURE UPDATE/DRAW
         if (creature.active) {
-            // fade in / fade out
             if (!creature.exiting) {
                 creature.opacity = Math.min(1, creature.opacity + 0.05);
             } else {
@@ -208,99 +214,98 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 }
             }
 
-            // AI seek (roam only)
+            // Adjust eat radius to match creature’s on-screen size
+            const eatRadius = (creature.size / W) * 0.6;
+
+            // AI seek + smooth direction
             if (!creature.exiting && particles.length > 0) {
                 if (now > creature.nextSeekAt) {
-                    let best = -1, bestD2 = 1e9;
-                    for (let i = 0; i < particles.length; i++) {
-                        const dx = particles[i].x - creature.x;
-                        const dy = particles[i].y - creature.y;
-                        const d2 = dx * dx + dy * dy;
-                        if (d2 < bestD2) { bestD2 = d2; best = i; }
+                    // Only switch targets every ~300ms
+                    if (!creature.target || now > creature.nextTargetSwitch) {
+                        let best = -1,
+                            bestD2 = 1e9;
+                        for (let i = 0; i < particles.length; i++) {
+                            const dx = particles[i].x - creature.x;
+                            const dy = particles[i].y - creature.y;
+                            const d2 = dx * dx + dy * dy;
+                            if (d2 < bestD2) {
+                                bestD2 = d2;
+                                best = i;
+                            }
+                        }
+                        if (best >= 0) {
+                            creature.target = particles[best];
+                            creature.nextTargetSwitch = now + 300 + Math.random() * 200;
+                        }
                     }
-                    creature.nextSeekAt = now + 80;
-                    if (best >= 0) {
-                        const t = particles[best];
-                        const dx = t.x - creature.x;
-                        const dy = t.y - creature.y;
+
+                    if (creature.target) {
+                        const dx = creature.target.x - creature.x;
+                        const dy = creature.target.y - creature.y;
                         const len = Math.hypot(dx, dy) || 1;
                         const step = creature.speed * (enabled ? 1 : 0);
-                        const prevX = creature.x, prevY = creature.y;
+                        const prevX = creature.x,
+                            prevY = creature.y;
                         creature.x += (dx / len) * step;
                         creature.y += (dy / len) * step;
 
-                        // trail
                         trail.push({ x: prevX, y: prevY, life: 1.0 });
                         if (trail.length > maxTrail) trail.shift();
 
-                        // eat
-                        if (len < creature.eatRadius) {
-                            particles.splice(best, 1);
-                            const previousTier = creature.tier;
-                            creature.size = Math.min(creature.maxSize, creature.size + creature.growthPerEat);
-                            const thresholds = [34, 48, 62, 78, 96];
+                        // eat only when really touching
+                        if (len < eatRadius) {
+                            const idx = particles.indexOf(creature.target);
+                            if (idx >= 0) particles.splice(idx, 1);
+                            creature.target = null;
+
+                            const prevTier = creature.tier;
+                            creature.size = Math.min(
+                                creature.maxSize,
+                                creature.size + creature.growthPerEat
+                            );
+
+                            const thresholds = [28, 38, 50, 64, 80];
                             let tier = 0;
-                            for (let i = 0; i < thresholds.length; i++) if (creature.size >= thresholds[i]) tier = i + 1;
+                            for (let i = 0; i < thresholds.length; i++)
+                                if (creature.size >= thresholds[i]) tier = i + 1;
                             creature.tier = Math.min(tier, images.creature.length - 1);
 
-                            // LEVEL-UP FLASH + SPARKS
-                            if (creature.tier > previousTier) {
-                                const bx = creature.x * W, by = creature.y * H;
-
-                                // bright radial burst
-                                levelUpBursts.push({ x: bx, y: by, r: 0, life: 1 });
-
-                                // spark burst
-                                for (let i = 0; i < 16; i++) {
+                            if (creature.tier > prevTier) {
+                                const bx = creature.x * W,
+                                    by = creature.y * H;
+                                const scale = creature.size / creature.maxSize;
+                                levelUpBursts.push({ x: bx, y: by, r: 0, life: 1, scale });
+                                for (let i = 0; i < 6; i++) {
                                     const a = Math.random() * Math.PI * 2;
-                                    const s = 2 + Math.random() * 3;
+                                    const s = (1 + Math.random() * 1.5) * (0.5 + scale);
                                     sparks.push({
                                         x: bx,
                                         y: by,
                                         vx: Math.cos(a) * s,
                                         vy: Math.sin(a) * s,
-                                        life: 1,
+                                        life: 0.7,
                                     });
                                 }
                             }
                         }
                     }
+                    creature.nextSeekAt = now + 80;
                 }
             }
 
-            // draw trail
-            if (trail.length) {
-                ctx.save();
-                ctx.globalCompositeOperation = "lighter";
-                for (let i = 0; i < trail.length; i++) {
-                    const p = trail[i];
-                    p.life -= 0.04;
-                    if (p.life <= 0) continue;
-                    const px = p.x * W, py = p.y * H;
-                    const grad = ctx.createRadialGradient(px, py, 0, px, py, 30);
-                    grad.addColorStop(0, `rgba(100,200,255,${0.18 * p.life})`);
-                    grad.addColorStop(1, `rgba(0,0,0,0)`);
-                    ctx.fillStyle = grad;
-                    ctx.beginPath();
-                    ctx.arc(px, py, 30, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-
-            // LEVEL-UP BURSTS
+            // Level-up bursts
             if (levelUpBursts.length) {
                 ctx.save();
                 ctx.globalCompositeOperation = "lighter";
                 for (let i = levelUpBursts.length - 1; i >= 0; i--) {
                     const b = levelUpBursts[i];
-                    b.r += 18;
-                    b.life -= 0.05;
+                    b.r += 8 * (0.5 + b.scale);
+                    b.life -= 0.04;
                     if (b.life <= 0) {
                         levelUpBursts.splice(i, 1);
                         continue;
                     }
-                    const alpha = 0.35 * b.life;
+                    const alpha = 0.08 * b.life * (0.5 + b.scale);
                     const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
                     grad.addColorStop(0, `rgba(120,255,255,${alpha})`);
                     grad.addColorStop(1, "rgba(0,0,0,0)");
@@ -312,7 +317,7 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                 ctx.restore();
             }
 
-            // SPARKS
+            // Sparks
             if (sparks.length) {
                 ctx.save();
                 ctx.globalCompositeOperation = "lighter";
@@ -326,35 +331,52 @@ export function createRiftWraith(ctx, w, h, DPR, particles, enabled, isMobile) {
                         continue;
                     }
                     ctx.globalAlpha = s.life;
-                    ctx.fillStyle = "rgba(180,255,255,0.8)";
+                    ctx.fillStyle = "rgba(160,255,255,0.4)";
                     ctx.beginPath();
-                    ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+                    ctx.arc(s.x, s.y, 1.2, 0, Math.PI * 2);
                     ctx.fill();
                 }
                 ctx.restore();
             }
-            ctx.globalAlpha = 1;
 
-            // draw creature
+            // Draw creature
             ctx.save();
             ctx.globalCompositeOperation = "lighter";
-            ctx.globalAlpha = 0.9 * creature.opacity;
+            ctx.globalAlpha = 0.07 * creature.opacity;
+
             const img = images.creature[Math.min(creature.tier, images.creature.length - 1)];
-            const s = creature.size, dx = creature.x * W, dy = creature.y * H;
+            const s = creature.size;
+            const dx = creature.x * W;
+            const dy = creature.y * H;
+
+            // smoother facing interpolation
+            let targetAngle = creature.angle;
+            if (trail.length > 1) {
+                const a = trail[trail.length - 1];
+                const b = trail[trail.length - 2];
+                targetAngle = Math.atan2(a.y - b.y, a.x - b.x);
+            }
+            let diff = targetAngle - creature.angle;
+            diff = ((diff + Math.PI) % (2 * Math.PI)) - Math.PI;
+            creature.angle += diff * 0.08; // slower turns = more natural
+
             const wiggle = Math.sin(Date.now() * 0.006) * 0.15;
+
             ctx.translate(dx, dy);
-            ctx.rotate(wiggle);
+            ctx.rotate(creature.angle + wiggle);
+
             if (img && img.complete) {
                 ctx.drawImage(img, -s, -s, s * 2, s * 2);
             } else {
                 const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, s);
-                grd.addColorStop(0, "rgba(160,220,255,0.7)");
+                grd.addColorStop(0, "rgba(160,220,255,0.25)");
                 grd.addColorStop(1, "rgba(0,0,0,0)");
                 ctx.fillStyle = grd;
                 ctx.beginPath();
                 ctx.arc(0, 0, s, 0, Math.PI * 2);
                 ctx.fill();
             }
+
             ctx.restore();
         }
     }
