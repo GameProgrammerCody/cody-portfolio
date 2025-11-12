@@ -258,7 +258,7 @@ export default function Project() {
                                 <img
                                     src={src}
                                     alt=""
-                                    className="w-full h-full object-contain bg-black transition-transform duration-500 hover:scale-105"
+                                    className="w-full h-full object-fill bg-black transition-transform duration-500 hover:scale-105"
                                 />
                             </button>
                         ))}
