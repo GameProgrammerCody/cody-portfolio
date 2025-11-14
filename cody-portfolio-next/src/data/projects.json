@@ -7,8 +7,8 @@
       "category": "Personal",
       "featured": true,
       "blurb": "A 3D survival game, built for mobile using Unity and C#. Players gather resources, craft, and battle enemies in a dynamic world.",
-      "tags": ["Unity", "C#", "Mobile"],
-      "platforms": ["Android", "iOS"],
+      "tags": [ "Unity", "C#", "Mobile" ],
+      "platforms": [ "Android", "iOS" ],
       "links": {
         "video": "https://youtu.be/tFYQ2n-zh18"
       },
@@ -40,7 +40,7 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "SpellBound Survival is a 3D magic-themed survival game developed in Unity3D using C#. Built primarily for Android with adaptive resolution and touch controls, it challenges players to explore, gather materials, craft tools, and survive in a procedurally generated world filled with enemies and elemental hazards."
+          "content": "SpellBound Survival is a 3D magic-themed survival game developed in Unity3D using C#, built primarily for Android with touch controls and adaptive resolution. Players explore a procedurally arranged world, gather materials, craft equipment, and battle enemies using intuitive on-screen spellcasting."
         },
         {
           "title": "Core Systems",
@@ -56,8 +56,8 @@
           "type": "list",
           "items": [
             "Custom Building & Storage System: Modular base-building with snapping placement and persistent save data.",
-            "Dynamic Interaction Framework: Unified input for gathering, combat, and interaction via contextual touch-based controls.",
-            "Editor Customization: Designer-friendly tools for creating and balancing items, enemies, and loot tables."
+            "Dynamic Interaction Framework: Unified input for gathering, combat, and object interaction via contextual on-screen buttons.",
+            "Editor Customization: Designer-friendly item, enemy, and loot-table editors for rapid iteration."
           ]
         },
         {
@@ -65,11 +65,11 @@
           "type": "grid",
           "items": [
             "Touch-optimized mobile controls",
+            "Adaptive resolution & multi-platform support",
             "Procedural zone generation",
             "Persistent inventory and progression",
-            "Custom base building system",
-            "Adaptive resolution support",
-            "Real-time spellcasting combat"
+            "Custom base building",
+            "Real-time combat and spellcasting"
           ]
         }
       ]
@@ -78,11 +78,11 @@
       "slug": "fortune-slots",
       "title": "Fortune Slots",
       "order": 2,
-      "category": ["Personal", "Arcade"],
+      "category": [ "Personal", "Arcade" ],
       "featured": true,
       "blurb": "A polished collection of themed slot-machine games for mobile, featuring custom payouts, bonus rounds, and daily rewards.",
-      "tags": ["Unity", "C#", "Mobile"],
-      "platforms": ["Android", "iOS"],
+      "tags": [ "Unity", "C#", "Mobile" ],
+      "platforms": [ "Android", "iOS" ],
       "links": {
         "video": "https://youtu.be/zlampnKuoJU"
       },
@@ -107,26 +107,26 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Fortune Slots is a mobile slot-machine collection built in Unity3D using C#. Designed for Android and iOS, it features multiple themed machines, adaptive UI layouts, and daily reward systems that keep players engaged. Each machine supports custom paylines, bet options, and dynamic bonus rounds."
+          "content": "Fortune Slots is a mobile slot-machine collection built in Unity3D using C#. Designed for Android and iOS, it features touch-optimized controls, adaptive resolution, and a polished arcade presentation. Players can explore a range of themed slot machines, each with its own mechanics, layouts, and bonus systems."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Scene Management: Smooth transitions between menus, machines, and bonus modes with persistent data.",
-            "Selection Hub: Scrollable machine selector with unlockable content and preview animations.",
-            "Wheel of Fortune: Daily reward wheel system offering free spins or currency bonuses.",
-            "Bonus Mechanics: Configurable special rounds that trigger on symbol matches or random intervals."
+            "Dynamic Scene Management: Smooth transitions between menus, game scenes, and bonus modes with persistent player data.",
+            "Game Selection Hub: Scrollable selection interface to browse, unlock, and launch different slot machines.",
+            "Wheel of Fortune: A daily reward mechanic allowing free or premium spins for extra currency bonuses.",
+            "Bonus Mechanics: Randomly triggered bonus rounds providing mini-games or special spin events for extra rewards."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "Fully data-driven slot templates configurable in the Unity editor.",
-            "Dynamic payout tables and adjustable bet modifiers per machine type.",
-            "Optimized for both portrait and landscape modes across multiple devices.",
-            "Cross-platform ready — deployable to Windows builds with minimal changes."
+            "Customizable Slot Templates: Each machine’s reel layout, symbols, and paylines are fully configurable within the Unity editor.",
+            "Dynamic Payout Tables: Adjustable bet modifiers and win conditions per machine type.",
+            "Cross-Platform Ready: Engineered for mobile devices but compatible with Windows builds without modification.",
+            "Touch and Resolution Adaptation: Scales intuitively across multiple screen sizes and aspect ratios."
           ]
         },
         {
@@ -138,7 +138,9 @@
             "Bonus rounds and mini-games",
             "Custom paylines and bet systems",
             "Touch-optimized UI",
-            "Persistent player progress"
+            "Multi-resolution support",
+            "Persistent player progress",
+            "Cross-platform compatibility"
           ]
         }
       ]
@@ -171,38 +173,40 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Shape Wars is a 2D side-scrolling shooter developed in Unity3D using C#. Designed for Android, it delivers classic arcade action with modern touches such as touch-based movement, adaptive resolution, and progressive difficulty scaling across multiple enemy types and bosses."
+          "content": "Shape Wars is a 2D side-scrolling shooter developed in Unity3D using C#. Designed primarily for Android with touch-optimized controls and adaptive resolution, the game challenges players to survive increasingly difficult waves of enemies while striving for the highest score."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Dynamic Level Progression with wave-based difficulty scaling and boss fights.",
-            "High Score Persistence: Session data is saved and compared using Unity’s PlayerPrefs system.",
-            "Enemy AI Framework: Each enemy features unique movement and attack behaviors.",
-            "Custom UI and control system for intuitive mobile play."
+            "Dynamic Level Progression: Level types are defined through scripts that control enemy spawn rates, difficulty scaling, and boss encounters.",
+            "High Score Persistence: Player performance is saved between sessions using Unity’s built-in save and load systems.",
+            "Boss Battle Integration: Dedicated encounter types disable standard spawning and introduce unique enemy patterns.",
+            "UI and Controls: Custom-built Unity UI for intuitive on-screen movement, abilities, and menu navigation."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "Data-driven wave definitions and enemy configurations.",
-            "Modular architecture for easily adding new enemy or boss types.",
-            "Adaptive resolution rendering pipeline for consistent visuals.",
-            "Cross-platform-ready design supporting PC builds without modification."
+            "Scripted Enemy AI: Each enemy type features an individual movement and attack behavior script with scalable difficulty.",
+            "Adaptive Resolution System: Ensures consistent presentation across various Android devices and aspect ratios.",
+            "Modular Level Design: Levels and enemy configurations are data-driven, allowing easy expansion of new waves and bosses.",
+            "Cross-Platform Ready: Fully compatible with desktop builds without code modification."
           ]
         },
         {
           "title": "Key Features",
           "type": "grid",
           "items": [
-            "Fast-paced 2D combat",
-            "Procedural enemy waves",
-            "Persistent high scores",
-            "Touch-based controls",
-            "Dynamic difficulty",
-            "Replayable arcade gameplay"
+            "Fast-paced 2D shooter gameplay",
+            "Progressive enemy waves and bosses",
+            "Persistent high score tracking",
+            "Touch-based mobile controls",
+            "Dynamic difficulty scaling",
+            "Custom-built Unity UI",
+            "Cross-platform compatibility",
+            "Replay-focused design"
           ]
         }
       ]
@@ -235,26 +239,26 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Blackjack is a digital recreation of the classic casino game, developed for Windows using C++ and the SDL2 library suite. The project focuses on object-oriented design, clean architecture, and responsive UI systems to simulate an authentic card game experience."
+          "content": "Blackjack is a digital recreation of the classic casino card game, developed for Windows using C++ and the SDL2 library suite. Built as an exploration of state machines and object-oriented design patterns, the project demonstrates clean architecture and responsive UI interaction."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "State Machine System: Handles transitions between menus, gameplay, and pause states cleanly and modularly.",
-            "Dealer Logic: Implements authentic rule-based behavior for card drawing and outcome resolution.",
-            "Timed Animations: Manages card dealing and pacing for smooth, realistic presentation.",
-            "Mouse-Driven UI: Intuitive input system with hover states, animations, and contextual buttons."
+            "Hierarchical State Machine: Manages transitions between menus, gameplay, and pause states with clean modular control.",
+            "Rule-Based Dealer Logic: Implements traditional Blackjack decision-making to handle dealer behavior and outcomes.",
+            "Timer-Based Animation: Card dealing and visual pacing are controlled with timed delays for a more authentic feel.",
+            "Interactive UI: Mouse-driven input and on-screen buttons for intuitive play, including in-game help menus."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "C++ and SDL2-based rendering and input system.",
-            "Implements State and Strategy patterns for scalable, maintainable design.",
-            "Efficient memory management and lightweight game loop.",
-            "Cross-platform potential with minimal dependency adjustments."
+            "Developed entirely in C++ with SDL2 and its extensions for rendering, audio, and input management.",
+            "Implements the State and Strategy design patterns for clean code separation and scalability.",
+            "Lightweight game loop with efficient resource management for smooth performance.",
+            "Cross-platform-ready architecture for easy adaptation beyond Windows builds."
           ]
         },
         {
@@ -263,10 +267,12 @@
           "items": [
             "Classic Blackjack gameplay",
             "State-driven architecture",
-            "Dealer AI logic",
-            "Card animations",
-            "Mouse-based input",
-            "Lightweight SDL2 framework"
+            "Rule-based dealer AI",
+            "Timed card animations",
+            "Mouse-based controls",
+            "In-game help and menu system",
+            "Lightweight SDL2 framework",
+            "Cross-platform potential"
           ]
         }
       ]
@@ -277,8 +283,8 @@
       "category": "Personal",
       "featured": false,
       "blurb": "A 2D platformer built in C++ with Allegro4, featuring custom physics, enemy AI, and modular text-driven level design.",
-      "tags": ["C++", "Allegro4", "Windows", "Platformer"],
-      "platforms": ["Windows"],
+      "tags": [ "C++", "Allegro4", "Windows", "Platformer" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/-1jWDClnAHU"
       },
@@ -299,42 +305,44 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Battle for Earth is a 2D side-scrolling platformer developed entirely in C++ using the Allegro4 library. It features hand-built physics, modular state management, and text-driven level design. Players navigate custom levels, engage enemies, and experience a short narrative journey."
+          "content": "Battle for Earth is a 2D platformer developed in C++ using the Allegro4 library. Designed for Windows, the project demonstrates custom physics, modular content design, and a lightweight game engine structure built entirely from scratch. Players navigate side-scrolling levels, engage unique enemies, and follow a short text-based narrative."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Custom Physics Engine: Implements gravity, collision detection, and platform movement logic.",
-            "State Management: Modular control over menu, gameplay, and pause states.",
-            "Text-Based Level Design: Levels and objects are defined using easily editable text files.",
-            "Dual Input Support: Playable via both keyboard and mouse controls."
+            "Custom Physics Engine: Hand-built platforming system for movement, jumping, and collision simulation.",
+            "State Management System: Menu and gameplay states handled via a flexible, modular state controller.",
+            "Level Definition via Text Files: Levels and block configurations are read from text files for fast iteration and easy expansion.",
+            "Dual Input Support: Fully playable using either mouse or keyboard controls for accessibility."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "Allegro4-based rendering and input handling in C++.",
-            "Text-driven content creation pipeline for rapid level design.",
-            "Configurable enemy and block behavior via external data.",
-            "Efficient architecture supporting extensible new content."
+            "Allegro4-based Rendering: Low-level graphics and input handling implemented using C++ and Allegro APIs.",
+            "Text-Driven Game Data: Environments and entities defined through editable text files to streamline content creation.",
+            "Custom Entity System: Enemies and blocks use script-like configurations for behavior and animation.",
+            "Modular Design: Architecture supports seamless addition of new levels, assets, and enemy types."
           ]
         },
         {
           "title": "Key Features",
           "type": "grid",
           "items": [
-            "Custom physics and collisions",
-            "Editable text-based levels",
+            "2D platformer gameplay",
+            "Custom-built physics engine",
+            "Editable level data via text files",
             "Unique enemy AI behaviors",
-            "Dual input support",
-            "State-driven game structure"
+            "Mouse and keyboard control options",
+            "State-driven menus and game flow",
+            "Text-based storytelling elements",
+            "Optimized Allegro4 framework"
           ]
         }
       ]
-    }
-    ,
+    },
     {
       "slug": "space-fighter",
       "title": "Space Fighter",
@@ -359,26 +367,26 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Space Fighter is a modern re-imagining of the classic Asteroids arcade experience, written in C++ with the Allegro5 framework. It showcases modular state management, parallax backgrounds, and progressive difficulty scaling while maintaining responsive, physics-based controls."
+          "content": "Space Fighter is a modern take on the classic Asteroids arcade game, developed in C++ using the Allegro5 framework. Designed for Windows, the project demonstrates advanced state management, parallax scrolling backgrounds, and progressive gameplay scaling with randomized power-ups and enemy encounters."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "State-Machine Architecture for menus, gameplay, and pause screens.",
-            "Dynamic Difficulty Scaling to increase enemy waves over time.",
-            "Randomized Power-Up System granting temporary weapon upgrades.",
-            "Parallax Background layers for visual depth and motion."
+            "State Machine Architecture: Separates menu, gameplay, and pause states with modular transitions.",
+            "Dynamic Difficulty Scaling: Enemy spawn rates and level intensity increase over time for sustained challenge.",
+            "Power-Up System: Randomly spawned buffs provide temporary advantages or weapon upgrades.",
+            "Parallax Backgrounds: Multi-layered scrolling environment enhances visual depth during gameplay and menus."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "C++ Allegro5-based rendering and timing systems.",
-            "Unified rendering pipeline shared between UI and gameplay.",
-            "Real-time spawning and physics simulation.",
-            "Lightweight architecture optimized for smooth 2D performance."
+            "Developed in C++ using Allegro5 for graphics, input, and timing systems.",
+            "Real-time spawning system controlling enemy waves and collectible items.",
+            "Point-based scoring logic tied to difficulty progression and level scaling.",
+            "Unified rendering pipeline shared between gameplay and UI scenes."
           ]
         },
         {
@@ -386,10 +394,12 @@
           "type": "grid",
           "items": [
             "Classic Asteroids-style gameplay",
-            "Dynamic enemy waves",
-            "Collectible power-ups",
-            "Smooth parallax scrolling",
-            "Progressive scoring system",
+            "Dynamic enemy waves and scaling difficulty",
+            "Collectible power-ups and buffs",
+            "Smooth parallax background system",
+            "State-driven menus and transitions",
+            "Progressive scoring mechanics",
+            "Lightweight Allegro5 framework",
             "Optimized for Windows"
           ]
         }
@@ -402,8 +412,8 @@
       "category": "Commercial",
       "featured": true,
       "blurb": "A 3D interactive laboratory simulator built in Unity and C#, developed for educational training in realistic scientific environments.",
-      "tags": ["Unity", "C#", "Simulation"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Simulation" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/XP8kRSjXirI"
       },
@@ -428,27 +438,37 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Lab Sim is a professional 3D virtual laboratory built in Unity using C#. It provides realistic, physics-based interactions for academic training, allowing students to perform complex experiments safely in an immersive environment."
+          "content": "Lab Sim is an advanced 3D virtual laboratory developed in C# using the Unity engine. Designed in collaboration with academic professionals, it allows students in scientific disciplines to conduct experiments in a realistic and interactive virtual environment. The project aims to supplement traditional learning by replicating laboratory procedures with high fidelity and accuracy."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Physics-based interaction and fluid dynamics.",
-            "Chemical reaction visualization and logic.",
-            "Interactive scientific tools (microscopes, scales, containers).",
-            "Time simulation system for long-term experiments.",
-            "Modular protocol framework for multiple experiment types."
+            "Physics-Based Interactions: Simulated fluid and solid dynamics for realistic material behavior.",
+            "Chemical Reactions: Visual and logical systems for color change, mixing, and combination of chemicals.",
+            "Scientific Instrumentation: Interactive tools such as microscopes, scales, and containers emulate real-world laboratory procedures.",
+            "Time Simulation System: Adjustable time flow to replicate long-term experiments or timed challenges.",
+            "Modular Protocol Framework: Supports multiple experiments and gameplay modes for diverse learning objectives."
           ]
         },
         {
           "title": "Technical Highlights",
           "type": "list",
           "items": [
-            "Unity C# systems with real-time physics and shader effects.",
-            "Configurable modules for rapid content expansion.",
-            "Scenario-based design driven by external data.",
-            "Custom UI and input architecture optimized for training efficiency."
+            "Developed in Unity with C#, utilizing particle systems, shaders, and real-time physics for realistic lab simulations.",
+            "Configurable modular architecture enabling quick integration of new experiments and apparatus.",
+            "Scenario-based design allows instructors or clients to define specific experiment protocols and conditions.",
+            "Custom UI and input systems built for intuitive interaction and training efficiency."
+          ]
+        },
+        {
+          "title": "Example Scenarios",
+          "type": "list",
+          "items": [
+            "Selecting, pouring, and combining chemicals with realistic fluid dynamics.",
+            "Weighing and mixing powdered compounds to form solutions.",
+            "Examining and analyzing slides under a virtual microscope.",
+            "Humidifying and storing samples overnight in controlled conditions."
           ]
         },
         {
@@ -458,9 +478,11 @@
             "Accurate scientific simulation",
             "Fluid and solid dynamics",
             "Multiple experiment modes",
-            "Time acceleration system",
-            "Modular design",
-            "Academic collaboration"
+            "Time simulation system",
+            "Modular, extensible design",
+            "Academic collaboration",
+            "High-fidelity visual feedback",
+            "Cross-compatible interactive tools"
           ]
         }
       ]
@@ -472,8 +494,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A branching-narrative 3D simulation where player choices dynamically affect storylines, factions, and world outcomes.",
-      "tags": ["Unity", "C#", "Narrative"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Narrative" ],
+      "platforms": [ "Windows" ],
       "media": {
         "thumbnail": "/assets/saving-security/hero.jpg",
         "hero": "/assets/saving-security/hero.jpg",
@@ -493,27 +515,50 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Saving Security is a 3D narrative simulation game built in Unity and C#. Every player decision influences relationships, events, and endings across a branching storyline framework designed for replayability and emotional impact."
+          "content": "Saving Security is a 3D narrative-driven simulation game developed in Unity and C#. The experience centers on player-driven decision-making, where every choice influences the evolving storyline, faction relationships, and ultimate outcome. Built with a modular design, the system allows for new storylines, characters, and events to be easily added or adapted."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Data-driven narrative system using ScriptableObjects.",
-            "Choice and consequence framework affecting factions and story paths.",
-            "Faction reputation tracking influencing dialogue and access.",
-            "Dynamic scene loading and persistent world state."
+            "Modular Story Framework: Narrative events, choices, and outcomes are data-driven for flexibility and scalability.",
+            "Choice & Consequence Engine: Player decisions dynamically alter story branches, unlock locations, and shape faction relations.",
+            "Faction Reputation System: Multiple in-game factions track player reputation, affecting dialogue, events, and story accessibility.",
+            "Dynamic Unlocking System: As the player progresses, new areas and interactions become available based on prior actions."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Unity and C# implementation using ScriptableObjects for event and choice management.",
+            "Custom dialogue and branching narrative system with data-driven conditions.",
+            "Adaptive scene transitions that preserve state and faction data across story modules.",
+            "Flexible story editor architecture enabling easy expansion and reconfiguration of plotlines."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Make impactful choices that shape the narrative direction and world state.",
+            "Influence multiple factions whose attitudes evolve based on player behavior.",
+            "Unlock new locations and events as the story progresses.",
+            "View a detailed summary at the end of each playthrough that reflects moral alignment, decisions, and faction standings."
           ]
         },
         {
           "title": "Key Features",
           "type": "grid",
           "items": [
-            "Branching storylines",
-            "Reactive faction AI",
-            "Replayable structure",
-            "Player-driven outcomes",
-            "Narrative summary screens"
+            "Branching narrative structure",
+            "Reactive faction systems",
+            "Dynamic world progression",
+            "High replayability",
+            "Player-driven moral outcomes",
+            "Modular event framework",
+            "Unity ScriptableObject data design",
+            "Narrative summary end screen"
           ]
         }
       ]
@@ -525,8 +570,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A turn-based logic card game featuring modular AI opponents and scalable gameplay systems.",
-      "tags": ["Unity", "C#", "AI", "Card Game"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "AI", "Card Game" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/vrLFdBrjoFU"
       },
@@ -547,16 +592,50 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Catch Up is a numerical strategy card game built in Unity and C#, showcasing AI-driven opponents, data-driven configuration, and modular turn-based logic systems."
+          "content": "Catch Up is a strategic numerical card game developed in Unity using C#. Players compete against AI-controlled opponents to achieve the highest total score by selecting cards in turn-based matches. The project showcases modular AI systems, adjustable gameplay rules, and adaptable content design for client-specific needs."
         },
         {
           "title": "Core Systems",
           "type": "list",
           "items": [
-            "Turn-based round controller with real-time score tracking.",
-            "AI behavior trees supporting multiple difficulty profiles.",
-            "Configurable deck and rule definitions for client variants.",
-            "Statistics tracking and session summary features."
+            "Turn-Based Card Logic: Alternating player and AI turns with real-time score tracking.",
+            "AI Opponent Framework: Multiple difficulty levels with unique decision-making profiles.",
+            "Dynamic Scoring System: Calculates win conditions based on cumulative card totals.",
+            "Customizable Deck Management: Supports variable card set sizes for flexible gameplay."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "C#-driven modular game logic for turn control, score calculation, and card distribution.",
+            "AI behavior trees and probability-based decision systems for opponent strategy.",
+            "Data-driven configuration enabling new AI profiles and deck layouts without code changes.",
+            "Integrated statistics tracking to record player performance and outcomes."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Challenge AI opponents with distinct playstyles and difficulty levels.",
+            "Select cards strategically to maximize score and outmaneuver opponents.",
+            "Adjust deck sizes and rules for different match types.",
+            "Track game results and per-opponent statistics after a series of matches."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "Turn-based gameplay",
+            "AI-driven opponents",
+            "Customizable deck sizes",
+            "Stat tracking and summaries",
+            "Dynamic scoring logic",
+            "Modular Unity architecture",
+            "C# event-driven systems",
+            "Client-ready configuration support"
           ]
         }
       ]
@@ -568,8 +647,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A Unity-based mission simulator testing player decision-making and risk management through adaptive scenarios.",
-      "tags": ["Unity", "C#", "Simulation"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Simulation" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/nt62FrKoOXA"
       },
@@ -588,7 +667,51 @@
         {
           "title": "Overview",
           "type": "text",
-          "content": "Rescue Squad is a mission-based simulation game built in Unity to analyze player decision-making, risk assessment, and adaptive strategy. Players manage a team of adventurers to complete dynamically generated missions with varying success probabilities."
+          "content": "Rescue Squad is a mission-based simulation game built in Unity using C#. Designed to assess player decision-making and aversion to risk, it challenges players to manage a team of adventurers and make strategic choices under uncertain conditions. The system dynamically adapts to player behavior, offering a mix of analysis and entertainment."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Squad Management: Players assemble and command a team of unique adventurers, each with specialized traits and skill levels.",
+            "Mission Generation: Procedurally generates missions with varying objectives, difficulty levels, and required attributes.",
+            "Outcome Simulation: Calculates mission results based on team composition and success probability, presented through animated sequences.",
+            "Reputation Tracking: Adjusts the player’s reputation and standing based on mission performance and risk-taking behavior."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Unity C# framework with modular mission and AI behavior systems.",
+            "Data-driven character attributes and procedural mission generation.",
+            "Dynamic difficulty scaling based on player risk profile and past decisions.",
+            "Custom animation system to visualize success and failure outcomes."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Review and accept missions that test your team’s skills and adaptability.",
+            "Assign squad members strategically based on their strengths and specializations.",
+            "Watch outcomes unfold through dynamic success and failure animations.",
+            "Experience increasing challenge as hidden mission variables and risk levels evolve with progress."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "Risk and reward analysis",
+            "Adaptive mission generation",
+            "AI-driven outcome simulation",
+            "Dynamic player profiling",
+            "Customizable adventurer traits",
+            "Reputation-based progression",
+            "Modular Unity design",
+            "C# event and data-driven systems"
+          ]
         }
       ]
     },
@@ -598,8 +721,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A negotiation-training simulator featuring AI-driven bargaining logic and performance evaluation.",
-      "tags": ["Unity", "C#", "Simulation", "AI"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Simulation", "AI" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/qK7PwnUy74w"
       },
@@ -615,7 +738,58 @@
           "/assets/bargaining-sim/screenshot_5.png",
           "/assets/bargaining-sim/screenshot_6.png"
         ]
-      }
+      },
+      "sections": [
+        {
+          "title": "Overview",
+          "type": "text",
+          "content": "Bargaining Sim is a 2D negotiation training game built in Unity using C#. It provides an interactive environment for players to practice negotiation techniques against AI-powered opponents, reinforcing core principles of compromise, strategy, and time-sensitive decision-making."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Negotiation Engine: Turn-based system where players and AI exchange offers for shares or assets.",
+            "AI Decision Model: Adaptive logic that evaluates fairness, timing, and player behavior to determine responses.",
+            "Deal Dynamics: Progressive reduction of viable shares over time, teaching the importance of timely decisions.",
+            "Performance Evaluation: End-of-round summary comparing player outcomes to target benchmarks."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Modular Unity C# architecture for easily adding new negotiation types or features.",
+            "Configurable AI profiles supporting multiple difficulty levels and strategic behaviors.",
+            "Data-driven scoring and performance tracking adaptable for client-specific targets.",
+            "Flexible UI system designed for rapid customization and localization."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Engage in realistic negotiations against AI opponents with varying skill levels.",
+            "Balance aggressive offers with cooperative strategies to reach mutual benefit.",
+            "Adapt to shrinking deal opportunities as rounds progress.",
+            "Review performance feedback and compare outcomes to established goals."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "AI-driven negotiation logic",
+            "Dynamic offer and deal system",
+            "Progressive time pressure mechanics",
+            "Adjustable difficulty settings",
+            "Educational game design",
+            "Performance tracking",
+            "Client-ready configuration",
+            "Unity modular framework"
+          ]
+        }
+      ]
     },
     {
       "slug": "security-controls",
@@ -623,8 +797,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "An educational cybersecurity-themed card game that reinforces learning through repetition and active recall.",
-      "tags": ["Unity", "C#", "Card Game", "Education"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Card Game", "Education" ],
+      "platforms": [ "Windows" ],
       "links": {
         "video": "https://youtu.be/GvD8XWy-Dcw"
       },
@@ -638,7 +812,58 @@
           "/assets/security-controls/screenshot_3.png",
           "/assets/security-controls/screenshot_4.png"
         ]
-      }
+      },
+      "sections": [
+        {
+          "title": "Overview",
+          "type": "text",
+          "content": "Security Controls is a single-player educational card game built in Unity using C#. It reinforces learning through repetition and active recall, helping players understand complex topics and retain information more effectively. The project combines game-based learning principles with flexible content design."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Progressive Difficulty: Each round provides less information per card, requiring players to rely on memory and prior experience.",
+            "Adaptive Learning Mechanics: Gameplay dynamically increases in challenge as player mastery improves.",
+            "Data-Driven Content: Card sets are fully modular, allowing any educational topic to be implemented with ease.",
+            "Feedback Loop: Continuous reinforcement through repeated exposure and success tracking."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "C#-based modular card management system for rapid topic substitution.",
+            "ScriptableObject-driven configuration supporting multiple learning modes.",
+            "Dynamic difficulty scaling system that adjusts data visibility and timing.",
+            "Customizable UI templates for educational branding or subject-specific design."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Study core concepts through interactive card play.",
+            "Memorize associations and recall key information under increasing challenge.",
+            "Improve retention through spaced repetition and gamified feedback.",
+            "Experience tailored learning across various topics, from cybersecurity to general education."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "Memory-based gameplay",
+            "Adaptive learning difficulty",
+            "Subject-flexible content system",
+            "Educational reinforcement",
+            "Data-driven design",
+            "C# modular architecture",
+            "Dynamic UI framework",
+            "Unity-powered simulation"
+          ]
+        }
+      ]
     },
     {
       "slug": "consumer-cognition",
@@ -646,8 +871,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A Unity-based educational city-builder where players earn currency by answering quiz questions to construct and upgrade their city.",
-      "tags": ["Unity", "C#", "Education", "Simulation"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Education", "Simulation" ],
+      "platforms": [ "Windows" ],
       "media": {
         "thumbnail": "/assets/consumer-cognition/hero.jpg",
         "hero": "/assets/consumer-cognition/hero.jpg",
@@ -657,7 +882,58 @@
           "/assets/consumer-cognition/screenshot_2.png",
           "/assets/consumer-cognition/screenshot_3.png"
         ]
-      }
+      },
+      "sections": [
+        {
+          "title": "Overview",
+          "type": "text",
+          "content": "Consumer Cognition is a 3D educational city-building game built in Unity using C#. It integrates a modular quiz system that rewards correct answers with in-game currency, which players use to construct and upgrade buildings in their city. The system encourages learning through engagement, progression, and creative play."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Quiz Engine: Modular question-and-answer system supporting varied topics and difficulty scaling.",
+            "Reward Economy: Players earn in-game currency by answering questions correctly, driving the building and upgrade systems.",
+            "City Builder Framework: Customizable building placement, upgrade, and visual feedback loops tied to player performance.",
+            "Modular Content Loader: Easily replaceable data modules for different educational subjects and gameplay goals."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Data-driven architecture using JSON and ScriptableObjects for flexible quiz content management.",
+            "Unity C# systems designed for easy reskinning and content expansion.",
+            "Persistent save system allowing long-term city progression and quiz tracking.",
+            "Optimized UI for question display, reward feedback, and player progression visualization."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Answer progressively challenging questions to earn building currency.",
+            "Construct and upgrade buildings to improve city visuals and player satisfaction.",
+            "Experience a tangible link between knowledge acquisition and city development.",
+            "Replay with new topics or difficulty levels to continually expand your learning city."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "Educational city-building gameplay",
+            "Modular quiz system",
+            "Dynamic reward economy",
+            "Customizable content modules",
+            "Persistent save data",
+            "Scalable difficulty",
+            "Unity C# architecture",
+            "Data-driven content design"
+          ]
+        }
+      ]
     },
     {
       "slug": "game-theory",
@@ -677,7 +953,58 @@
           "/assets/game-theory/screenshot_2.png",
           "/assets/game-theory/screenshot_3.png"
         ]
-      }
+      },
+      "sections": [
+        {
+          "title": "Overview",
+          "type": "text",
+          "content": "Game Theory is an interactive WebGL learning tool developed in Unity using C#. It was designed to teach the foundational concepts of game theory — such as cooperation, competition, and payoff optimization — through a simulation of the classic Prisoner’s Dilemma scenario."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Interactive Simulation: Allows users to adjust input variables representing the likelihood of various player decisions.",
+            "Dynamic Outcome Calculation: Uses core game theory equations to compute optimal results and payoff outcomes.",
+            "Educational Visualization: Displays real-time feedback on decision outcomes to reinforce key theoretical concepts.",
+            "Scenario Framework: Supports extension beyond the Prisoner’s Dilemma to other strategic interaction models."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Unity WebGL build optimized for browser-based interactivity and accessibility.",
+            "C# calculation engine applying payoff matrices and probability distributions.",
+            "Clean modular UI for adjusting parameters and visualizing decision outcomes.",
+            "Scalable design for adding new models or game theory simulations in future iterations."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Adjust input sliders or fields to modify player decision probabilities.",
+            "Observe how strategy and cooperation affect payoff outcomes.",
+            "Experiment with multiple iterations to explore long-term equilibrium behavior.",
+            "Learn through direct interaction with fundamental game theory concepts."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "Educational WebGL simulation",
+            "Interactive probability modeling",
+            "Dynamic outcome calculation",
+            "Real-time visual feedback",
+            "C# mathematical logic engine",
+            "Modular Unity framework",
+            "Expandable theory modules",
+            "Accessible browser deployment"
+          ]
+        }
+      ]
     },
     {
       "slug": "marketing-sim",
@@ -685,8 +1012,8 @@
       "category": "Commercial",
       "featured": false,
       "blurb": "A browser-based marketing strategy simulator that teaches campaign budgeting and outcome analysis through interactive scenarios.",
-      "tags": ["Unity", "C#", "Simulation", "Education"],
-      "platforms": ["Windows"],
+      "tags": [ "Unity", "C#", "Simulation", "Education" ],
+      "platforms": [ "Windows" ],
       "media": {
         "thumbnail": "/assets/marketing-sim/hero.jpg",
         "hero": "/assets/marketing-sim/hero.jpg",
@@ -696,7 +1023,58 @@
           "/assets/marketing-sim/screenshot_2.png",
           "/assets/marketing-sim/screenshot_3.png"
         ]
-      }
+      },
+      "sections": [
+        {
+          "title": "Overview",
+          "type": "text",
+          "content": "Marketing Sim is a browser-based marketing strategy simulator built with Unity and C#. It teaches players how to allocate budgets, plan campaigns, and assess marketing outcomes. Designed for educational integration, it runs as a WebGL application embedded within a webpage and supports easy post-launch customization through modular data structures."
+        },
+        {
+          "title": "Core Systems",
+          "type": "list",
+          "items": [
+            "Budget Allocation System: Players assign limited resources across various marketing channels to maximize effectiveness.",
+            "Campaign Configuration: Editors can define new businesses, budgets, and available options through modular data files.",
+            "Outcome Simulation: The system evaluates campaign success based on player decisions, business type, and resource distribution.",
+            "Custom Content Framework: Facilitates the creation of new campaign types and scenarios without code modification."
+          ]
+        },
+        {
+          "title": "Technical Highlights",
+          "type": "list",
+          "items": [
+            "Built using Unity’s WebGL exporter for seamless browser deployment.",
+            "Data-driven design using JSON configuration files for campaigns and parameters.",
+            "Modular C# architecture supporting rapid customization and content iteration.",
+            "Optimized UI for clear feedback on spending efficiency and marketing outcomes."
+          ]
+        },
+        {
+          "title": "Gameplay Experience",
+          "type": "list",
+          "items": [
+            "Select a business and plan your marketing strategy within a limited budget.",
+            "Distribute resources across multiple advertising options and channels.",
+            "Run the simulation to see how effectively your marketing campaign performs.",
+            "Learn the impact of strategic decision-making on real-world marketing success."
+          ]
+        },
+        {
+          "title": "Key Features",
+          "type": "grid",
+          "items": [
+            "WebGL-based simulation",
+            "Budget allocation gameplay",
+            "Modular business creation system",
+            "Data-driven campaign logic",
+            "Educational integration",
+            "C# modular architecture",
+            "Outcome visualization",
+            "Browser-based accessibility"
+          ]
+        }
+      ]
     }
   ]
 }
