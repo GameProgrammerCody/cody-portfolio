@@ -11,7 +11,10 @@ const youtubeId = (url) => {
 }
 
 export default function Project() {
+
     const router = useRouter()
+    if (!router.isReady) return null
+
     const { slug } = router.query
     const [project, setProject] = useState(null)
     const [idx, setIdx] = useState(-1)
@@ -104,8 +107,7 @@ export default function Project() {
         }, 220)
     }
 
-    if (!slug || !project)
-        return <p className="p-10 text-center text-white/60">Loading…</p>
+    if (!project) return null
 
     const prev = idx > 0 ? visibleProjects[idx - 1] : null
     const next =

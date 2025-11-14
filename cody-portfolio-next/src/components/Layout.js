@@ -2,25 +2,11 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 
-// ✅ Lazy-load ParticleBackground to avoid render-blocking JS
+// Lazy-load ParticleBackground (client only)
 const ParticleBackground = dynamic(() => import('./ParticleBackground'), {
     ssr: false,
     loading: () => null,
 })
-
-// Inject shimmer animation if not present
-if (typeof window !== 'undefined' && !document.getElementById('shimmer-anim')) {
-    const style = document.createElement('style')
-    style.id = 'shimmer-anim'
-    style.innerHTML = `
-    @keyframes shimmer {
-      0% { background-position: 200% center; }
-      50% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-  `
-    document.head.appendChild(style)
-}
 
 export default function Layout({ children }) {
     const [scrolled, setScrolled] = useState(false)
@@ -28,7 +14,23 @@ export default function Layout({ children }) {
     const [menuOpen, setMenuOpen] = useState(false)
     const footerRef = useRef(null)
 
-    // Header blur + shadow on scroll
+    // Inject shimmer animation safely (client-only, after hydration)
+    useEffect(() => {
+        if (!document.getElementById('shimmer-anim')) {
+            const style = document.createElement('style')
+            style.id = 'shimmer-anim'
+            style.innerHTML = `
+                @keyframes shimmer {
+                    0% { background-position: 200% center; }
+                    50% { background-position: -200% center; }
+                    100% { background-position: 200% center; }
+                }
+            `
+            document.head.appendChild(style)
+        }
+    }, [])
+
+    // Header blur + shadow when scrolling
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 20)
         window.addEventListener('scroll', handleScroll)
@@ -38,8 +40,10 @@ export default function Layout({ children }) {
     // Footer glow fade-in
     useEffect(() => {
         const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => setFooterVisible(entry.isIntersecting))
+            entries => {
+                entries.forEach(entry =>
+                    setFooterVisible(entry.isIntersecting)
+                )
             },
             { threshold: 0.2 }
         )
@@ -47,7 +51,7 @@ export default function Layout({ children }) {
         return () => observer.disconnect()
     }, [])
 
-    // Close menu when resizing to desktop
+    // Close mobile menu on desktop resize
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) setMenuOpen(false)
@@ -58,10 +62,9 @@ export default function Layout({ children }) {
 
     return (
         <div className="min-h-screen text-white relative overflow-x-hidden">
-            {/* ✅ Background loads after main thread settles */}
             <ParticleBackground />
 
-            {/* ----- Header ----- */}
+            {/* Header */}
             <header
                 className={`fixed top-0 left-0 right-0 z-30 transition-all duration-500 border-b border-cyan-400/20 ${scrolled
                         ? 'backdrop-blur-md bg-gradient-to-r from-cyan-900/40 via-blue-900/40 to-indigo-900/40 shadow-[0_0_25px_rgba(0,255,255,0.15)]'
@@ -69,13 +72,14 @@ export default function Layout({ children }) {
                     }`}
             >
                 <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-                    {/* Logo / Name */}
+
+                    {/* Logo */}
                     <Link
                         href="/"
                         scroll={false}
                         className="font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r 
-             from-cyan-400 via-blue-300 to-indigo-400 bg-[length:200%_auto]
-             animate-[shimmer_10s_ease-in-out_infinite] transition hover:opacity-90 text-lg sm:text-xl"
+                        from-cyan-400 via-blue-300 to-indigo-400 bg-[length:200%_auto]
+                        animate-[shimmer_10s_ease-in-out_infinite] transition hover:opacity-90 text-lg sm:text-xl"
                     >
                         CODY WAY
                     </Link>
@@ -86,7 +90,7 @@ export default function Layout({ children }) {
                             { href: '/projects', label: 'Projects' },
                             { href: '/about', label: 'About' },
                             { href: '/resume', label: 'Resume' },
-                        ].map((item) => (
+                        ].map(item => (
                             <Link
                                 key={item.href}
                                 href={item.href}
@@ -96,15 +100,15 @@ export default function Layout({ children }) {
                                 <span className="text-white/80 group-hover:text-cyan-300 transition-colors duration-300">
                                     {item.label}
                                 </span>
-                                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-400 transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
 
                         <a
                             href="mailto:gameprogrammercody@gmail.com"
                             className="ml-2 px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/30 
-               border border-cyan-400/30 text-cyan-200 text-xs font-semibold hover:from-cyan-500/50 
-               hover:to-blue-500/50 transition-all shadow-[0_0_10px_rgba(0,255,255,0.15)]"
+                            border border-cyan-400/30 text-cyan-200 text-xs font-semibold hover:from-cyan-500/50 
+                            hover:to-blue-500/50 transition-all shadow-[0_0_10px_rgba(0,255,255,0.15)]"
                         >
                             Hire Me
                         </a>
@@ -124,17 +128,18 @@ export default function Layout({ children }) {
                     </button>
                 </div>
 
-                {/* Mobile Dropdown Menu */}
+                {/* Mobile Dropdown */}
                 <div
                     className={`md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                         }`}
                 >
                     <div className="bg-black/80 backdrop-blur-md border-t border-cyan-400/20 text-center py-4 space-y-3">
+
                         {[
                             { href: '/projects', label: 'Projects' },
                             { href: '/about', label: 'About' },
                             { href: '/resume', label: 'Resume' },
-                        ].map((item) => (
+                        ].map(item => (
                             <Link
                                 key={item.href}
                                 href={item.href}
@@ -149,8 +154,8 @@ export default function Layout({ children }) {
                         <a
                             href="mailto:gameprogrammercody@gmail.com"
                             className="inline-block mt-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/30 
-               border border-cyan-400/30 text-cyan-200 text-xs font-semibold hover:from-cyan-500/50 
-               hover:to-blue-500/50 transition-all shadow-[0_0_10px_rgba(0,255,255,0.15)]"
+                            border border-cyan-400/30 text-cyan-200 text-xs font-semibold hover:from-cyan-500/50 
+                            hover:to-blue-500/50 transition-all shadow-[0_0_10px_rgba(0,255,255,0.15)]"
                         >
                             Hire Me
                         </a>
@@ -162,21 +167,24 @@ export default function Layout({ children }) {
                 </div>
             </header>
 
-            {/* ----- Page Content ----- */}
-            <main className="mx-auto max-w-6xl px-4 pt-24 pb-16">{children}</main>
+            {/* Content */}
+            <main className="mx-auto max-w-6xl px-4 pt-24 pb-16">
+                {children}
+            </main>
 
-            {/* ----- Footer ----- */}
+            {/* Footer */}
             <footer
                 ref={footerRef}
                 className="relative mt-10 border-t border-cyan-400/20 bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-indigo-950/40 backdrop-blur-md overflow-hidden group"
             >
                 <div
                     className={`absolute -top-24 left-1/2 -translate-x-1/2 w-[140%] h-48 
-            bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.18)_0%,rgba(60,120,255,0.1)_40%,transparent_80%)]
-            blur-[100px] transition-all duration-[2000ms] ease-out
-            ${footerVisible ? 'opacity-90 scale-100' : 'opacity-0 scale-75'}`}
+                    bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.18)_0%,rgba(60,120,255,0.1)_40%,transparent_80%)]
+                    blur-[100px] transition-all duration-[2000ms] ease-out
+                    ${footerVisible ? 'opacity-90 scale-100' : 'opacity-0 scale-75'}`}
                 />
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-cyan-400/50 via-blue-400/50 to-transparent"></div>
+
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-cyan-400/50 via-blue-400/50 to-transparent" />
 
                 <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-3 gap-8 text-sm">
                     <div className="space-y-2">
@@ -190,7 +198,7 @@ export default function Layout({ children }) {
                     <div className="flex flex-col space-y-2">
                         <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
                             Explore
-                            <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent"></span>
+                            <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent" />
                         </h4>
                         <Link href="/" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">Home</Link>
                         <Link href="/projects" scroll={false} className="text-white/60 hover:text-cyan-300 transition-colors">Projects</Link>
@@ -201,51 +209,75 @@ export default function Layout({ children }) {
                     <div className="flex flex-col space-y-2">
                         <h4 className="font-semibold text-cyan-300/90 text-sm uppercase tracking-wide relative mb-1">
                             Contact
-                            <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent"></span>
+                            <span className="absolute bottom-0 left-0 w-8 h-[1px] bg-gradient-to-r from-cyan-400/70 to-transparent" />
                         </h4>
                         <a href="mailto:gameprogrammercody@gmail.com" className="text-white/60 hover:text-cyan-300 transition-colors">
                             gameprogrammercody@gmail.com
                         </a>
-                        <a href="https://linkedin.com/in/cody-way" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-300 transition-colors">
+                        <a
+                            href="https://linkedin.com/in/cody-way"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white/60 hover:text-cyan-300 transition-colors"
+                        >
                             LinkedIn
                         </a>
                     </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-blue-400/40"></div>
+
+                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-blue-400/40" />
             </footer>
         </div>
     )
 }
 
-/* --- Galaxy Toggle (unchanged) --- */
+/* --- Galaxy Toggle --- */
 function GalaxyToggle() {
-    const [enabled, setEnabled] = useState(() => {
-        if (typeof window === 'undefined') return true
-        const saved = localStorage.getItem('reduceMotion')
-        return saved !== 'true'
-    })
+    // hydration-safe
+    const [enabled, setEnabled] = useState(true)
+    const [mounted, setMounted] = useState(false)
+
+    // these must be declared unconditionally
     const [showHint, setShowHint] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
 
     useEffect(() => {
+        const saved = localStorage.getItem('reduceMotion')
+        setEnabled(saved !== 'true')
+        setMounted(true)
+    }, [])
+
+    // run client-only effects AFTER mounted
+    useEffect(() => {
+        if (!mounted) return
+
         setIsMobile(window.innerWidth < 768)
+
         const seen = sessionStorage.getItem('seenGalaxyHint')
         if (!seen && !isMobile) {
             setShowHint(true)
             sessionStorage.setItem('seenGalaxyHint', 'true')
+
             const timer = setTimeout(() => setShowHint(false), 2000)
             return () => clearTimeout(timer)
         }
-    }, [isMobile])
+    }, [mounted, isMobile])
 
     const toggle = () => {
         const newValue = !enabled
         setEnabled(newValue)
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('reduceMotion', newValue ? 'false' : 'true')
-            const event = new CustomEvent('motionToggle', { detail: newValue })
-            window.dispatchEvent(event)
-        }
+        localStorage.setItem('reduceMotion', newValue ? 'false' : 'true')
+        window.dispatchEvent(new CustomEvent('motionToggle', { detail: newValue }))
+    }
+
+    // Now it's safe to conditionally render JSX
+    if (!mounted) {
+        return (
+            <div className="relative flex flex-col items-center group">
+                {/* Invisible placeholder to avoid layout jump */}
+                <div className="p-2 rounded-full border border-transparent opacity-0" />
+            </div>
+        )
     }
 
     return (
@@ -253,7 +285,7 @@ function GalaxyToggle() {
             <button
                 onClick={toggle}
                 className={`relative p-2 rounded-full border backdrop-blur-sm transition-all duration-500
-          ${enabled
+                    ${enabled
                         ? 'border-cyan-400/50 text-cyan-200 bg-black/40 shadow-[0_0_15px_rgba(0,255,255,0.25)]'
                         : 'border-blue-400/40 text-blue-300 bg-black/30 shadow-[0_0_10px_rgba(100,160,255,0.25)]'
                     }`}
@@ -279,7 +311,7 @@ function GalaxyToggle() {
             {!isMobile && (
                 <div
                     className={`absolute top-full mt-2 px-2 py-1 text-[11px] rounded-md border text-cyan-200 bg-black/80 border-cyan-400/30 shadow-[0_0_10px_rgba(0,255,255,0.25)]
-            transition-all duration-300 ${showHint || 'opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0'
+                        transition-all duration-300 ${showHint || 'opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0'
                         }`}
                 >
                     Motion: {enabled ? 'On' : 'Off'}
@@ -288,3 +320,4 @@ function GalaxyToggle() {
         </div>
     )
 }
+
