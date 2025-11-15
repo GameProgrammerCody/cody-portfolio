@@ -222,6 +222,14 @@ export default function Layout({ children }) {
                         >
                             LinkedIn
                         </a>
+                        <a
+                            href="https://github.com/GameProgrammerCody/gameplay-systems"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white/60 hover:text-cyan-300 transition-colors"
+                        >
+                            GitHub
+                        </a>
                     </div>
                 </div>
 
