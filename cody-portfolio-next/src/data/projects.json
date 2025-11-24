@@ -92,15 +92,13 @@
         "titleLogo": "/assets/fortune-slots/title.png",
         "gallery": [
           "/assets/fortune-slots/screenshot_1.PNG",
-          "/assets/fortune-slots/screenshot_10.PNG",
           "/assets/fortune-slots/screenshot_2.PNG",
           "/assets/fortune-slots/screenshot_3.PNG",
           "/assets/fortune-slots/screenshot_4.PNG",
           "/assets/fortune-slots/screenshot_5.PNG",
           "/assets/fortune-slots/screenshot_6.PNG",
           "/assets/fortune-slots/screenshot_7.PNG",
-          "/assets/fortune-slots/screenshot_8.PNG",
-          "/assets/fortune-slots/screenshot_9.PNG"
+          "/assets/fortune-slots/screenshot_8.PNG"
         ]
       },
       "sections": [
